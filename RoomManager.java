@@ -1,4 +1,4 @@
-        
+
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.RemoteException;
@@ -6,45 +6,38 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 public class RoomManager {
-        
-    ArrayList<Room> room;
-    Registry registry;
 
-    public RoomManager() {
-    System.err.println("Server ready");
-    try {
-    registry = LocateRegistry.createRegistry(1099);
-    } catch (Exception x)
-    {
-    System.err.println("Error" + x);
-    }
-    
-    }
+	ArrayList<Room> room;
+	Registry registry;
 
-    public String helloTo(String x) {
-        return "Hello, world!";
-    }
-        
-	public void addRoom()
-	{
-	   
-        try {
-	   Room x = new Room();
-           RoomInterface stub = (RoomInterface) UnicastRemoteObject.exportObject(x, 0);
+	public RoomManager() {
+		System.err.println("Server ready");
+		room = new ArrayList<Room>();
+		try {
+			registry = LocateRegistry.createRegistry(1099);
+		} catch (Exception x)
+		{
+			System.err.println("Error" + x);
+		}
 
-            // Bind the remote object's stub in the registry
-            
-           registry.bind("obj1", x);
-
-        } catch (Exception e) {
-            System.err.println("Server exception: " + e.toString());
-            e.printStackTrace();
-        }
 	}
-    public static void main(String args[]) {
-  
-	RoomManager x = new RoomManager();
-    x.addRoom();
-   while(true); 
-    }
+
+	public void addRoom() {
+		Room newRoom = new Room();
+		room.add(newRoom);
+		try
+		{
+			registry.bind(String.valueOf(room.size()),newRoom);
+		}
+		catch(Exception e)
+		{
+			System.out.println("error - cant bind this room");
+		}    
+	}
+
+	public static void main(String args[]) {
+
+		RoomManager x = new RoomManager();
+		x.addRoom();
+	}
 }
