@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class RoomManager implements RMIInterface {
+public class RoomManager {
         
     ArrayList<Room> room;
     Registry registry;
@@ -13,7 +13,7 @@ public class RoomManager implements RMIInterface {
     public RoomManager() {
     System.err.println("Server ready");
     try {
-    registry = LocateRegistry.createRegistry(7585);
+    registry = LocateRegistry.createRegistry(1099);
     } catch (Exception x)
     {
     System.err.println("Error" + x);
@@ -29,11 +29,12 @@ public class RoomManager implements RMIInterface {
 	{
 	   
         try {
-//            RMIInterface stub = (RMIInterface) UnicastRemoteObject.exportObject(obj, 0);
+	   Room x = new Room();
+           RoomInterface stub = (RoomInterface) UnicastRemoteObject.exportObject(x, 0);
 
             // Bind the remote object's stub in the registry
             
-//            registry.bind("obj1", stub);
+           registry.bind("obj1", x);
 
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());

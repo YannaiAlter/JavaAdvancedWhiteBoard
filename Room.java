@@ -1,3 +1,3 @@
-class Room
+class Room implements RoomInterface
 {
 }
