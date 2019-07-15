@@ -5,18 +5,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class TableServer implements RMIInterface {
+public class RoomManager implements RMIInterface {
         
-    ArrayList<RoomProperties> table;
+    ArrayList<Room> room;
     Registry registry;
 
-    public TableServer() {
+    public RoomManager() {
     System.err.println("Server ready");
     try {
-    registry = LocateRegistry.getRegistry();
+    registry = LocateRegistry.createRegistry(7585);
     } catch (Exception x)
     {
-    System.err.println("Error");
+    System.err.println("Error" + x);
     }
     
     }
@@ -29,12 +29,11 @@ public class TableServer implements RMIInterface {
 	{
 	   
         try {
-            TableServer obj = new TableServer();
-            RMIInterface stub = (RMIInterface) UnicastRemoteObject.exportObject(obj, 0);
+//            RMIInterface stub = (RMIInterface) UnicastRemoteObject.exportObject(obj, 0);
 
             // Bind the remote object's stub in the registry
             
-            registry.bind("obj1", stub);
+//            registry.bind("obj1", stub);
 
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
@@ -43,8 +42,8 @@ public class TableServer implements RMIInterface {
 	}
     public static void main(String args[]) {
   
-	TableServer x = new TableServer();
+	RoomManager x = new RoomManager();
     x.addRoom();
-    
+   while(true); 
     }
 }
