@@ -1,0 +1,9 @@
+.root {
+    -fx-font-size: 14px;
+    -fx-font-family: sans-serif;
+    -fx-background-size: cover;
+    -fx-background-image: url("https://i.imgur.com/wQgwoF0.jpg");
+}
+.grid
+{
+}
