@@ -1,9 +1,9 @@
 #toolbox
 {
 	-fx-background-color: white;
-	-fx-border-color: #0066ff;
+	-fx-border-color: #9C9C9C;
 	-fx-border-width: 2;
-	-fx-background-radius: 5;
+	-fx-border-radius: 10;
 }
 #pencil
 {
@@ -42,5 +42,15 @@
 {
     -fx-border-color: #0066ff;
 	-fx-border-width: 2;
+}
+#outputChat
+{
+	-fx-background-color: #CEE3E6;
+	-fx-background-radius: 7;
+}
+#inputChat
+{
+	-fx-background-color: #CEE3E6;
+	-fx-background-radius: 10;
 }
 

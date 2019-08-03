@@ -3,7 +3,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
 
-public class LobbyController {
+public class LoginController {
 
     @FXML
     TextField username;
