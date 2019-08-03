@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="500.0" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="500.0" stylesheets="@RoomDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@RoomDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <AnchorPane id="toolbox" prefHeight="418.0" prefWidth="60.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="5.0" layoutY="12.0" text="Toolbox" />
-            <Label id="rectangle" ellipsisString="" layoutX="12.0" layoutY="93.0" prefHeight="30.0" prefWidth="34.0" AnchorPane.topAnchor="50.0" />
-            <Label id="pencil" ellipsisString="" layoutX="18.0" layoutY="47.0" prefHeight="21.0" prefWidth="22.0" AnchorPane.topAnchor="100.0" />
-            <Label id="circle" ellipsisString="" layoutX="13.0" layoutY="143.0" prefHeight="30.0" prefWidth="34.0" AnchorPane.topAnchor="150.0" />
-         </children>
-      </AnchorPane>
-   </left>
-   <bottom>
-      <BorderPane prefHeight="133.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <BorderPane id="roomlist" prefHeight="508.0" prefWidth="172.0" BorderPane.alignment="CENTER">
          <top>
-            <TextArea editable="false" prefHeight="102.0" prefWidth="500.0" BorderPane.alignment="CENTER">
-               <cursor>
-                  <Cursor fx:constant="NONE" />
-               </cursor>
-            </TextArea>
+            <Label prefHeight="45.0" prefWidth="96.0" text="Room List" textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Avenir Next Bold" size="20.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Label>
          </top>
+         <center>
+            <Group BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="41.0" text="Chat" textFill="WHITE">
+                     <font>
+                        <Font name="Avenir Next Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextFlow id="outputChat" layoutY="45.0" prefHeight="146.0" prefWidth="128.0" />
+                  <TextField id="inputChat" layoutY="195.0" prefHeight="27.0" prefWidth="128.0" promptText="Enter a message..." />
+               </children>
+            </Group>
+         </center>
+      </BorderPane>
+   </left>
+   <right>
+      <BorderPane prefHeight="535.0" prefWidth="549.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
          <bottom>
-            <TextField prefHeight="32.0" prefWidth="500.0" promptText="Send a message..." BorderPane.alignment="CENTER" />
+            <Pane id="toolbox" prefHeight="42.0" prefWidth="318.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" />
+               </BorderPane.margin>
+               <children>
+                  <Label id="pencil" layoutX="30.0" layoutY="10.0" prefHeight="21.0" prefWidth="23.0" />
+                  <Label id="rectangle" layoutX="80.0" layoutY="4.0" prefHeight="33.0" prefWidth="32.0" />
+                  <Label id="circle" layoutX="130.0" layoutY="11.0" prefHeight="21.0" prefWidth="23.0" />
+               </children>
+            </Pane>
          </bottom>
       </BorderPane>
-   </bottom>
+   </right>
 </BorderPane>
