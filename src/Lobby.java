@@ -14,7 +14,7 @@ public class Lobby extends Application {
     public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("RoomDesign.fxml"));
-            Scene scene = new Scene(root, 500, 500);
+            Scene scene = new Scene(root, 700, 500);
 
             stage.setTitle("Lobby");
             stage.setScene(scene);
