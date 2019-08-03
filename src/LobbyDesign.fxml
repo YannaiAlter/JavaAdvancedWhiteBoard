@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="1000.0" maxWidth="1000.0" minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="1000.0" stylesheets="@LobbyDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LobbyController">
    <center>
-      <GridPane accessibleRoleDescription="FITPARENT" blendMode="SRC_ATOP" maxHeight="420.0" maxWidth="465.0" minHeight="0.0" minWidth="0.0" opacity="0.75" prefHeight="420.0" prefWidth="465.0" style="-fx-background-color: #cc0000; -fx-background-radius: 20;" styleClass="grid" BorderPane.alignment="CENTER">
+      <GridPane accessibleRoleDescription="FITPARENT" blendMode="SRC_ATOP" maxHeight="400.0" maxWidth="450.0" minHeight="0.0" minWidth="0.0" opacity="0.75" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #cc0000; -fx-background-radius: 20;" styleClass="grid" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.726318359375" minWidth="10.0" prefWidth="163.92623901367188" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.07376098632812" minWidth="10.0" prefWidth="236.07376098632812" />
@@ -24,7 +24,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField prefHeight="26.0" prefWidth="228.0" stylesheets="@LobbyDesign.css" GridPane.columnIndex="1">
+            <TextField fx:id="username" prefHeight="26.0" prefWidth="228.0" stylesheets="@LobbyDesign.css" GridPane.columnIndex="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -37,11 +37,11 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets bottom="50.0" />
                </GridPane.margin></TextField>
-            <Label prefHeight="40.0" prefWidth="165.0" text="Password:" GridPane.rowIndex="1">
+            <Label prefHeight="40.0" prefWidth="165.0" text="Password:" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets bottom="50.0" left="50.0" />
                </GridPane.margin>
@@ -49,7 +49,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button id="loginbutton" pickOnBounds="false" prefHeight="110.0" prefWidth="173.0" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button id="loginbutton" onAction="#onLoginMouse" pickOnBounds="false" prefHeight="110.0" prefWidth="173.0" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
@@ -71,6 +71,17 @@
                   <Font size="20.0" />
                </font>
             </Button>
+            <Label fx:id="status" alignment="TOP_LEFT" contentDisplay="BOTTOM" prefHeight="31.0" prefWidth="244.0" text="Label" textFill="#ffc3c3" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="50.0" />
+               </GridPane.margin>
+            </Label>
          </children>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

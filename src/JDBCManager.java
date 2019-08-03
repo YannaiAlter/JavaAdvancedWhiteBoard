@@ -28,7 +28,10 @@ public class JDBCManager {
             pt.setString(1, username);
             ResultSet rs = pt.executeQuery();
             String orgUname = "", orPass = "";
-            while (rs.next()) {
+            if (!rs.next()) //username not exists
+            return false;
+            else
+            {
                 orgUname = rs.getString("username");
                 orPass = rs.getString("password");
             } //end while
@@ -37,8 +40,6 @@ public class JDBCManager {
                 rs.close();
                 return true;
 
-            } else {
-                //do something
             }
         }//end try
         catch (Exception e) {
