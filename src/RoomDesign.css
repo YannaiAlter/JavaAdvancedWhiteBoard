@@ -21,12 +21,16 @@
     -fx-background-position: center;
 
 }
-#rectangle:hover
+#circle
 {
-	-fx-border-color: #0066ff;
-	-fx-border-width: 2;
+	-fx-background-image: url("/resources/circle-shape-outline.png");
+	-fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
 }
-#pencil:hover
+
+#pencil:hover, #circle:hover, #rectangle:hover
 {
     -fx-border-color: #0066ff;
 	-fx-border-width: 2;

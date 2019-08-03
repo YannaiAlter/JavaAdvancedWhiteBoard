@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="500.0" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="500.0" stylesheets="@RoomDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <TextField alignment="TOP_LEFT" prefHeight="82.0" prefWidth="500.0" />
-   </bottom>
    <left>
       <AnchorPane id="toolbox" prefHeight="418.0" prefWidth="60.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="5.0" layoutY="12.0" text="Toolbox" />
-            <Label id="rectangle" ellipsisString="" layoutX="12.0" layoutY="93.0" prefHeight="30.0" prefWidth="34.0" />
-            <Label id="pencil" ellipsisString="" layoutX="18.0" layoutY="47.0" prefHeight="21.0" prefWidth="22.0" />
+            <Label id="rectangle" ellipsisString="" layoutX="12.0" layoutY="93.0" prefHeight="30.0" prefWidth="34.0" AnchorPane.topAnchor="50.0" />
+            <Label id="pencil" ellipsisString="" layoutX="18.0" layoutY="47.0" prefHeight="21.0" prefWidth="22.0" AnchorPane.topAnchor="100.0" />
+            <Label id="circle" ellipsisString="" layoutX="13.0" layoutY="143.0" prefHeight="30.0" prefWidth="34.0" AnchorPane.topAnchor="150.0" />
          </children>
       </AnchorPane>
    </left>
+   <bottom>
+      <BorderPane prefHeight="133.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+         <top>
+            <TextArea editable="false" prefHeight="102.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="NONE" />
+               </cursor>
+            </TextArea>
+         </top>
+         <bottom>
+            <TextField prefHeight="32.0" prefWidth="500.0" promptText="Send a message..." BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </bottom>
 </BorderPane>
