@@ -1,5 +1,7 @@
 # JavaAdvancedWhiteBoard
 
+## Dependencies:
+  ### Database Navigator Plugin
 ### Add JavaFX Library from here:
     https://openjfx.io/openjfx-docs/
 ## For Windows:
