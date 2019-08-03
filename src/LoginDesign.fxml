@@ -60,7 +60,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button id="account" mnemonicParsing="false" prefHeight="110.0" prefWidth="173.0" text="Create an account" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+            <Button id="account" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="110.0" prefWidth="173.0" text="Create an account" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

@@ -4,10 +4,6 @@
     -fx-background-size: cover;
     -fx-background-image: url("https://i.imgur.com/wQgwoF0.jpg");
 }
-.grid
-{
-}
-
 #loginbutton
 {
     -fx-background-radius: 20;
