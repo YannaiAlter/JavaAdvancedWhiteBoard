@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1000.0" maxWidth="1000.0" minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="1000.0" styleClass="root" stylesheets="@LobbyDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1000.0" maxWidth="1000.0" minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="1000.0" stylesheets="@LobbyDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LobbyController">
    <center>
-      <GridPane id="grid" accessibleRoleDescription="FITPARENT" blendMode="SRC_ATOP" maxHeight="420.0" maxWidth="465.0" minHeight="0.0" minWidth="0.0" opacity="0.75" prefHeight="420.0" prefWidth="465.0" style="-fx-background-color: #cc0000; -fx-background-radius: 20;" styleClass="grid" stylesheets="@LobbyDesign.css" BorderPane.alignment="CENTER">
+      <GridPane accessibleRoleDescription="FITPARENT" blendMode="SRC_ATOP" maxHeight="420.0" maxWidth="465.0" minHeight="0.0" minWidth="0.0" opacity="0.75" prefHeight="420.0" prefWidth="465.0" style="-fx-background-color: #cc0000; -fx-background-radius: 20;" styleClass="grid" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.726318359375" minWidth="10.0" prefWidth="163.92623901367188" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.07376098632812" minWidth="10.0" prefWidth="236.07376098632812" />
@@ -37,30 +37,39 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="50.0" />
+               </GridPane.margin></TextField>
             <Label prefHeight="40.0" prefWidth="165.0" text="Password:" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="50.0" />
+                  <Insets bottom="50.0" left="50.0" />
                </GridPane.margin>
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button cache="true" depthTest="ENABLE" mnemonicParsing="false" pickOnBounds="false" prefHeight="110.0" prefWidth="186.0" style="-fx-background-color: #1a8642#1a8642; -fx-background-radius: 20; -fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 20;" styleClass="username" stylesheets="@LobbyDesign.css" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button id="loginbutton" pickOnBounds="false" prefHeight="110.0" prefWidth="173.0" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="50.0" />
                </GridPane.margin>
-               <cursor>
-                  <Cursor fx:constant="NONE" />
-               </cursor>
+               <opaqueInsets>
+                  <Insets top="5.0" />
+               </opaqueInsets>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Button>
-            <Button id="account" mnemonicParsing="false" prefHeight="110.0" prefWidth="173.0" style="-fx-background-color: #c20016#c20016; -fx-background-radius: 20; -fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 20;" styleClass="account" stylesheets="@LobbyDesign.css" text="Create an account" textOverrun="CLIP" GridPane.rowIndex="2">
+            <Button id="account" mnemonicParsing="false" prefHeight="110.0" prefWidth="173.0" text="Create an account" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets />
+                  <Insets left="40.0" />
                </GridPane.margin>
                <opaqueInsets>
                   <Insets left="10.0" />
                </opaqueInsets>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Button>
          </children>
          <cursor>

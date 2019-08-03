@@ -7,3 +7,27 @@
 .grid
 {
 }
+
+#loginbutton
+{
+    -fx-background-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+	-fx-background-color: white;
+}
+#loginbutton:hover
+{
+    -fx-background-color:black;
+}
+
+#account
+{
+    -fx-background-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+	-fx-background-color: white;
+}
+#account:hover
+{
+    -fx-background-color:black;
+}
