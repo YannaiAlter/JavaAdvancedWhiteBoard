@@ -18,7 +18,7 @@ public class JDBCManager {
 
             // establish connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/javaproject", "root", "yanayyanay");
+            Connection con = DriverManager.getConnection("jdbc:mysql://213.152.162.94:38363/javaproject", "root", "yanayyanay");
 
             pt = con.prepareStatement("select username,password from accounts where username=?");
 
@@ -59,7 +59,7 @@ public class JDBCManager {
 
             // establish connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/javaproject", "root", "yanayyanay");
+            Connection con = DriverManager.getConnection("jdbc:mysql://213.152.162.94:38363/javaproject", "root", "yanayyanay");
 
             // query database
             pt = con.prepareStatement("select username,password from accounts where username=?");
