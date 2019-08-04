@@ -1,0 +1,1 @@
+--module-path /Users/yannaialter/workspace/javaProject/JavaAdvancedWhiteBoard/lib/javafx-sdk-12.0.2/lib --add-modules javafx.controls,javafx.fxml
