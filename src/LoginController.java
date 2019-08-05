@@ -49,7 +49,6 @@ public class LoginController {
                 return;
             }
             if(JDBCManager.checkLogin(username.getText(), password.getText())) {
-                System.out.println("Success"); // Will switch scene
                 status.setText("Success");
                 status.setVisible(true);
 
