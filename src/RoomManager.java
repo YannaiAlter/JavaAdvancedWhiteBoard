@@ -9,7 +9,7 @@ public class RoomManager {
 
 	public RoomManager() {
 		System.err.println("Server ready");
-		room = new ArrayList<Room>();
+		room = new ArrayList<>();
 		try {
 			registry = LocateRegistry.createRegistry(1099);
 		} catch (Exception x)
