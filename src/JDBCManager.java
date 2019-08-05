@@ -3,12 +3,13 @@ import java.sql.*;
 public class JDBCManager {
     public static void main(String args[]) {
         try {
-            System.out.println(createUser("helalo", "admin"));
+
         }
         catch (Exception e) {}
     }
 
     public static boolean createUser(String username, String password)
+            throws Exception
     {
         Connection connection = null; // manages connection
         PreparedStatement pt = null; // manages prepared statement
@@ -18,38 +19,35 @@ public class JDBCManager {
 
             // establish connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://213.152.162.94:38363/javaproject", "root", "yanayyanay");
+            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-            pt = con.prepareStatement("select username,password from accounts where username=?");
+            pt = connection.prepareStatement("select username,password from accounts where username=?");
 
             // process query results
             pt.setString(1, username);
             ResultSet rs = pt.executeQuery();
-            if (rs.next()) //username not exists
+            if (rs.next()) //username already exists
                 return false;
 
 
             // query database
-            pt = con.prepareStatement("insert into accounts values(?,?);");
+            pt = connection.prepareStatement("insert into accounts values(?,?);");
 
             // process query results
             pt.setString(1, username);
             pt.setString(2, password);
             pt.executeUpdate();
 
-
         }//end try
-        catch (Exception e)
-        {
-            System.out.println(e);
-
+        catch (Exception e) {
+            throw e;
         }
-        // return false;
+
         return true;
     }
 
     public static boolean checkLogin(String username, String password)
-            throws SQLException {
+            throws Exception{
 
         Connection connection = null; // manages connection
         PreparedStatement pt = null; // manages prepared statement
@@ -59,32 +57,32 @@ public class JDBCManager {
 
             // establish connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://213.152.162.94:38363/javaproject", "root", "yanayyanay");
+
+            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
             // query database
-            pt = con.prepareStatement("select username,password from accounts where username=?");
+            pt = connection.prepareStatement("select username,password from accounts where username=?");
 
             // process query results
             pt.setString(1, username);
             ResultSet rs = pt.executeQuery();
-            String orgUname = "", orPass = "";
+            String orPass = "";
+
             if (!rs.next()) //username not exists
-            return false;
+                return false;
             else
-            {
-                orgUname = rs.getString("username");
                 orPass = rs.getString("password");
-            } //end while
+
             if (orPass.equals(password)) {
                 //do something
                 rs.close();
                 return true;
-
             }
         }//end try
         catch (Exception e) {
+            throw e;
         } //end catch
-        return false;
-    } //end main
 
+        return false;
+    }
 }
