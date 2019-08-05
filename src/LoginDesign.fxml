@@ -53,7 +53,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Label fx:id="status" alignment="TOP_LEFT" contentDisplay="BOTTOM" prefHeight="31.0" prefWidth="244.0" text="Label" textFill="#ffc3c3" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Label fx:id="status" alignment="TOP_LEFT" contentDisplay="BOTTOM" prefHeight="31.0" prefWidth="232.0" text="Label" textFill="#ffc3c3" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -61,7 +61,7 @@
                   <Font size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="50.0" />
+                  <Insets />
                </GridPane.margin>
             </Label>
             <Label alignment="CENTER" layoutX="60.0" layoutY="142.0" prefHeight="30.0" prefWidth="202.0" text="Password:" GridPane.rowIndex="1">
