@@ -13,13 +13,15 @@ public class Login extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("LoginDesign.fxml"));
+            Parent root  = FXMLLoader.load(getClass().getResource("LoginDesign.fxml"));
             Scene scene = new Scene(root, 700, 500);
 
             stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
-        }catch(Exception e){}
+        }catch(Exception e){
+            System.out.println(e);
+        }
 
     }
 

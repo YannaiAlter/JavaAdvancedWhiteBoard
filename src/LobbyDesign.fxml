@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="panel" prefHeight="620.0" prefWidth="718.0" stylesheets="@LobbyDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="panel" prefHeight="620.0" prefWidth="718.0" stylesheets="@LobbyDesign.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LobbyController">
    <children>
       <GridPane layoutX="74.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="599.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -26,7 +26,7 @@
                   <Insets bottom="5.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="450.0" style="-fx-background-radius: 10;" text="Create New Room" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="createRoomButton" alignment="CENTER" mnemonicParsing="false" onAction="#createRoom" prefHeight="60.0" prefWidth="450.0" style="-fx-background-radius: 10;" text="Create New Room" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin></Button>
@@ -34,7 +34,7 @@
                <content>
                   <AnchorPane prefHeight="401.0" prefWidth="597.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ListView layoutY="-14.0" prefHeight="449.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="roomList" layoutY="-14.0" prefHeight="449.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>

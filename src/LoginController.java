@@ -51,12 +51,15 @@ public class LoginController {
             if(JDBCManager.checkLogin(username.getText(), password.getText())) {
                 status.setText("Success");
                 status.setVisible(true);
-
-                Parent lobbyParent = FXMLLoader.load(getClass().getResource("LobbyDesign.fxml"));
+                FXMLLoader loader =new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
+                Parent lobbyParent = loader.load();
                 Scene lobbyScene = new Scene(lobbyParent);
                 Stage mainStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 mainStage.setScene(lobbyScene);
                 mainStage.show();
+                Lobby lobby = new Lobby(loader.getController());
+                Thread thread = new Thread(lobby);
+                thread.start();
             }
             else {
                 status.setText("Unidentified username or invalid password.");
