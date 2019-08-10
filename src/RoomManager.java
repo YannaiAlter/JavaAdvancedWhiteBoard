@@ -18,7 +18,8 @@ public class RoomManager {
 		System.err.println("Server ready");
 		room = new ArrayList<>();
 		try {
-			registry = LocateRegistry.createRegistry(1100);
+			System.setProperty("java.rmi.server.hostname","192.168.1.17");
+			registry = LocateRegistry.createRegistry(1099);
 		} catch (Exception x)
 		{
 			System.err.println("Error" + x);
@@ -59,11 +60,9 @@ public class RoomManager {
 
 	public static void main(String args[]) {
 
-	try{createServer();
-		addRoom("hello");
-		addRoom("sup");
-		ArrayList<String>rooms = getRoomNamesFromRegistry();
-		System.out.println(Arrays.toString(rooms.toArray()));
+	try{
+		createServer();
+		while(true);
 	}
 	catch (Exception e)
 	{

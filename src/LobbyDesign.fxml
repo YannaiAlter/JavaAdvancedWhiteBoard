@@ -19,6 +19,7 @@
           <RowConstraints maxHeight="419.5596466064453" minHeight="10.0" prefHeight="416.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="70.0" valignment="CENTER" vgrow="NEVER" />
           <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="450.0" style="-fx-background-radius: 10;" text="Join This Room" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -39,6 +40,7 @@
                   </AnchorPane>
                </content>
             </ScrollPane>
+            <Button fx:id="refresh" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshList" prefHeight="48.0" prefWidth="450.0" style="-fx-background-radius: 10;" text="Refresh" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>

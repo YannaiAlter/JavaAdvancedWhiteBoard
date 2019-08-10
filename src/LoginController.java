@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
@@ -5,7 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.stage.Stage;
+import javafx.animation.*;
 import javafx.event.*;
+import javafx.util.*;
 public class LoginController {
 
     @FXML
@@ -57,9 +60,20 @@ public class LoginController {
                 Stage mainStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 mainStage.setScene(lobbyScene);
                 mainStage.show();
-                Lobby lobby = new Lobby(loader.getController());
-                Thread thread = new Thread(lobby);
-                thread.start();
+                Login.mainController=loader.getController();
+                Lobby lobby = new Lobby();
+
+
+                Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Platform.runLater(lobby);
+                    }
+                }));
+                oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
+                oneSecondTimerUpdateList.play();
+
             }
             else {
                 status.setText("Unidentified username or invalid password.");

@@ -4,16 +4,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class Login extends Application {
 
+    static Object mainController;
     public static void main(String[] args) {
+        try {
+            RoomManager.initRegistry();
+
+        }catch (Exception e){};
         launch(args);
     }
 
     @Override
     public void start(Stage stage) {
         try {
-            Parent root  = FXMLLoader.load(getClass().getResource("LoginDesign.fxml"));
+            FXMLLoader loader  = new FXMLLoader(getClass().getResource("LoginDesign.fxml"));
+            Parent root = loader.load();
+            mainController = loader.getController();
             Scene scene = new Scene(root, 700, 500);
 
             stage.setTitle("Login");
