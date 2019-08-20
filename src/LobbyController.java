@@ -1,6 +1,11 @@
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import java.awt.event.ActionEvent;
@@ -8,6 +13,7 @@ import java.util.*;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 
 public class LobbyController {
     @FXML
@@ -17,7 +23,10 @@ public class LobbyController {
     @FXML
     Button refresh;
 
-    public void refreshList()
+    @FXML
+    Button disconnect;
+
+        public void refreshList()
     {
         Platform.runLater(new Lobby());
     }
@@ -34,7 +43,7 @@ public class LobbyController {
     public boolean createRoom()
     {
         TextInputDialog dialog = new TextInputDialog("walter");
-        dialog.setTitle("Text Input Dialog");
+        dialog.setTitle("Room's Name");
         dialog.setHeaderText("Look, a Text Input Dialog");
         dialog.setContentText("Please enter your name:");
 
@@ -47,5 +56,18 @@ public class LobbyController {
 
         //RoomManager.addRoom();
         return true;
+    }
+
+    public void disconnect(javafx.event.ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginDesign.fxml"));
+            Parent loginParent = loader.load();
+            Scene loginScene = new Scene(loginParent);
+            Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            mainStage.setScene(loginScene);
+            mainStage.show();
+            Login.mainController=loader.getController();
+        }
+        catch (Exception e){}
     }
 }

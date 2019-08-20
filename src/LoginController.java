@@ -74,12 +74,14 @@ public class LoginController {
                 oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
                 oneSecondTimerUpdateList.play();
 
+                lobby.setTimerUpdateList(oneSecondTimerUpdateList);
             }
             else {
                 status.setText("Unidentified username or invalid password.");
                 status.setVisible(true);
             }
         }catch (Exception e) {
+            e.printStackTrace();
             System.out.println("An error occurred when connecting to SQL Database");
         }
 

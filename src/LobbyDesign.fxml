@@ -35,7 +35,7 @@
                <content>
                   <AnchorPane prefHeight="401.0" prefWidth="597.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ListView fx:id="roomList" layoutY="-14.0" prefHeight="449.0" prefWidth="626.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="roomList" prefHeight="449.0" prefWidth="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -43,5 +43,6 @@
             <Button fx:id="refresh" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshList" prefHeight="48.0" prefWidth="450.0" style="-fx-background-radius: 10;" text="Refresh" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
+      <Button fx:id="disconnect" layoutX="615.0" layoutY="15.0" mnemonicParsing="false" onAction="#disconnect" text="Disconnect" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
    </children>
 </AnchorPane>
