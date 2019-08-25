@@ -22,11 +22,16 @@ public class LobbyController {
     ListView roomList;
     @FXML
     Button refresh;
-
     @FXML
     Button disconnect;
 
-        public void refreshList()
+    String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void refreshList()
     {
         Platform.runLater(new Lobby());
     }
@@ -34,7 +39,9 @@ public class LobbyController {
     {
         roomList.getItems().add(roomName);
         try{RoomManager.addRoom(roomName);}
-        catch (Exception e){};
+        catch (Exception e){
+            e.printStackTrace();
+        };
     }
     public void resetRoomList()
     {
@@ -44,13 +51,13 @@ public class LobbyController {
     {
         TextInputDialog dialog = new TextInputDialog("walter");
         dialog.setTitle("Room's Name");
-        dialog.setHeaderText("Look, a Text Input Dialog");
-        dialog.setContentText("Please enter your name:");
+        //dialog.setHeaderText("Look, a Text Input Dialog");
+        dialog.setContentText("Please enter the wanted room's name:");
 
 // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
-            System.out.println("Your name: " + result.get());
+            System.out.println("Room's name: " + result.get());
             addToRoomList(result.get());
         }
 
@@ -60,6 +67,7 @@ public class LobbyController {
 
     public void disconnect(javafx.event.ActionEvent actionEvent) {
         try {
+            logOut();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginDesign.fxml"));
             Parent loginParent = loader.load();
             Scene loginScene = new Scene(loginParent);
@@ -68,6 +76,11 @@ public class LobbyController {
             mainStage.show();
             Login.mainController=loader.getController();
         }
-        catch (Exception e){}
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void logOut(){
+        JDBCManager.LogInOutUser(username,false);
     }
 }

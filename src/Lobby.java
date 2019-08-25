@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Lobby implements Runnable {
     Timeline timerUpdateList;
+
     public void setTimerUpdateList(Timeline timerUpdateList){
         this.timerUpdateList=timerUpdateList;
     }
@@ -32,7 +33,8 @@ public class Lobby implements Runnable {
             else
                 timerUpdateList.stop();
         }
-        catch (Exception e) { };
+        catch (Exception e) {
+            e.printStackTrace();
+        };
     }
-
 }
