@@ -18,11 +18,11 @@ public class RoomManager {
 		System.err.println("Server ready");
 		room = new ArrayList<>();
 		try {
-			System.setProperty("java.rmi.server.hostname","192.168.1.17");
+			System.setProperty("java.rmi.server.hostname","85.64.66.32");
 			registry = LocateRegistry.createRegistry(1099);
-		} catch (Exception x)
-		{
-			System.err.println("Error" + x);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -30,31 +30,30 @@ public class RoomManager {
 	public static ArrayList<String> getRoomNamesFromRegistry()throws MalformedURLException, RemoteException, NotBoundException
 	{
 		ArrayList<String>roomNames = new ArrayList<String>();
-		String[]boundNames =registry.list();
-		for(String name : boundNames)
-		{
-			RoomInterface room = (RoomInterface)registry.lookup(name);
-			roomNames.add(room.getName());
+		String [] boundNames =registry.list();
+		if(boundNames.length>0) {
+			for (String name : boundNames) {
+				RoomInterface room = (RoomInterface) registry.lookup(name);
+				roomNames.add(room.getName());
+			}
 		}
 		return roomNames;
 	}
 	public static void initRegistry()throws MalformedURLException, RemoteException, NotBoundException
 	{
 		registry=LocateRegistry.getRegistry();
-		System.out.println(registry);
+		//System.out.println(registry);
 
 	}
 	public static void addRoom(String roomName) throws RemoteException {
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
-		try
-		{
+		try {
 			registry.rebind(roomName,newRoom);
 			System.out.println("Added Room");
 		}
-		catch(Exception e)
-		{
-			System.out.println(e);
+		catch(Exception e) {
+			e.printStackTrace();
 		}    
 	}
 
@@ -64,11 +63,9 @@ public class RoomManager {
 		createServer();
 		while(true);
 	}
-	catch (Exception e)
-	{
-	System.out.println(e);
+	catch (Exception e) {
+		e.printStackTrace();
 	}
-
 
 	}
 }
