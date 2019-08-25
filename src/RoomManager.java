@@ -19,8 +19,8 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 		System.err.println("Server ready");
 		room = new ArrayList<>();
 		try {
-			System.setProperty("java.rmi.server.hostname","85.64.66.32");
-			registry = LocateRegistry.createRegistry(1099);
+			System.setProperty("java.rmi.server.hostname",DBFinals.RMIHost);
+			registry = LocateRegistry.createRegistry(DBFinals.RMIPort);
 			registry.rebind("RoomManager",this);
 			System.out.println("Created");
 		} catch (Exception x)
@@ -63,9 +63,8 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 	}
 	public static RoomInterface getRoomManager()
 	{
-		String host = "192.168.1.17";
 		try {
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost,DBFinals.RMIPort);
 			RoomInterface rooms = (RoomInterface) registry.lookup("RoomManager");
 			return rooms;
 		} catch (Exception e) {
