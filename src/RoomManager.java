@@ -19,14 +19,16 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 		System.err.println("Server ready");
 		room = new ArrayList<>();
 		try {
-			System.setProperty("java.rmi.server.hostname","192.168.1.17");
+			System.setProperty("java.rmi.server.hostname","85.64.66.32");
 			registry = LocateRegistry.createRegistry(1099);
 			registry.rebind("RoomManager",this);
 			System.out.println("Created");
 		} catch (Exception x)
 		{
 			System.err.println("Error" + x);
+
 		}
+
 	}
 
 
@@ -41,6 +43,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 			RoomInterface room = (RoomInterface)registry.lookup(name);
 			System.out.println("Room: "+room.getName());
 			roomNames.add(room.getName());
+
 		}
 		return roomNames;
 	}
@@ -53,7 +56,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 	public void initRegistry()throws MalformedURLException, RemoteException, NotBoundException
 	{
 		registry=LocateRegistry.getRegistry();
-		System.out.println(registry);
+		//System.out.println(registry);
 
 
 	}
@@ -89,9 +92,8 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 			registry.rebind("RoomManager",this);
 			System.out.println("Added Room");
 		}
-		catch(Exception e)
-		{
-			System.out.println(e);
+		catch(Exception e) {
+			e.printStackTrace();
 		}    
 	}
 
@@ -104,11 +106,9 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 		{
 		}
 	}
-	catch (Exception e)
-	{
-	System.out.println(e);
+	catch (Exception e) {
+		e.printStackTrace();
 	}
-
 
 	}
 }

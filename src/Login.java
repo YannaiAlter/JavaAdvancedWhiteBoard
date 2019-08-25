@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -6,13 +7,10 @@ import javafx.stage.Stage;
 
 
 public class Login extends Application {
-
     static Object mainController;
-    public static void main(String[] args) {
-        try {
-        //    RoomManager.initRegistry();
 
-        }catch (Exception e){};
+    public static void main(String[] args) {
+
         launch(args);
     }
 
@@ -28,9 +26,14 @@ public class Login extends Application {
             stage.setScene(scene);
             stage.show();
         }catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
-
     }
 
+    @Override
+    public void stop() throws Exception {
+        if(mainController instanceof LobbyController)//to expend when there will be rooms
+            ((LobbyController) mainController).logOut();
+        Platform.exit();
+    }
 }
