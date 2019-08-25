@@ -20,7 +20,6 @@ public class LoginController {
     @FXML
     Label status;
 
-
     public void onRegisterClick(ActionEvent actionEvent)
     {
         try {
@@ -51,39 +50,51 @@ public class LoginController {
                 status.setVisible(true);
                 return;
             }
-            if(JDBCManager.checkLogin(username.getText(), password.getText())) {
-                status.setText("Success");
-                status.setVisible(true);
-                FXMLLoader loader =new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
-                Parent lobbyParent = loader.load();
-                Scene lobbyScene = new Scene(lobbyParent);
-                Stage mainStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-                mainStage.setScene(lobbyScene);
-                mainStage.show();
-                Login.mainController=loader.getController();
-                Lobby lobby = new Lobby();
+            int state=JDBCManager.checkLogin(username.getText(), password.getText());
+            //0 fine, 1 username not exists, 2 wrong password, 3 user already logged in
+
+            switch (state) {
+                case 0:
+                    status.setText("Success");
+                    JDBCManager.LogInOutUser(username.getText(),true);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
+                    Parent lobbyParent = loader.load();
+                    Scene lobbyScene = new Scene(lobbyParent);
+                    Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    mainStage.setScene(lobbyScene);
+                    mainStage.show();
+                    Login.mainController = loader.getController();
+                    ((LobbyController)Login.mainController).setUsername(username.getText());
+                    Lobby lobby = new Lobby();
 
 
-                Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+                    Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        Platform.runLater(lobby);
-                    }
-                }));
-                oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
-                oneSecondTimerUpdateList.play();
+                        @Override
+                        public void handle(ActionEvent event) {
+                            Platform.runLater(lobby);
+                        }
+                    }));
+                    oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
+                    oneSecondTimerUpdateList.play();
 
-                lobby.setTimerUpdateList(oneSecondTimerUpdateList);
+                    lobby.setTimerUpdateList(oneSecondTimerUpdateList);
+                    break;
+                case 1:
+                    status.setText("Unidentified username.");
+                    break;
+                case 2:
+                    status.setText("Wrong password.");
+                    break;
+                case 3:
+                    status.setText("User already logged in.");
+                    break;
             }
-            else {
-                status.setText("Unidentified username or invalid password.");
-                status.setVisible(true);
-            }
-        }catch (Exception e) {
+            status.setVisible(true);
+        }
+        catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error occurred when connecting to SQL Database");
         }
-
     }
 }
