@@ -38,11 +38,6 @@ public class LobbyController {
     public void addToRoomList(String roomName)
     {
         roomList.getItems().add(roomName);
-        try{RoomManager.getRoomManager().addRoom(roomName);}
-        catch (Exception e){
-                    e.printStackTrace();
-        };
-
     }
     public void resetRoomList()
     {
@@ -59,7 +54,14 @@ public class LobbyController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             System.out.println("Room's name: " + result.get());
-            addToRoomList(result.get());
+            addToRoomList(result.get()); // adding to gui
+           try {
+               RoomManager.getRoomManager().addRoom(result.get()); // adding to rmi server
+           }
+           catch (Exception e)
+           {
+               System.out.println("Can't add room - rmi error");
+           }
         }
 
         //RoomManager.addRoom();

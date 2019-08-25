@@ -53,6 +53,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 	{
 		return this.room;
 	}
+
 	public void initRegistry()throws MalformedURLException, RemoteException, NotBoundException
 	{
 		registry=LocateRegistry.getRegistry();
@@ -104,6 +105,10 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface
 		getRoomManager();
 		while(true)
 		{
+			for(Room x : room.getRooms()) {
+			System.out.print(x);
+			System.out.println();
+			}
 		}
 	}
 	catch (Exception e) {

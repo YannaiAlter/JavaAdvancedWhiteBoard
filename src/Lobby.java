@@ -28,6 +28,9 @@ public class Lobby implements Runnable {
                 System.out.println("List: " + Arrays.toString(roomsList.toArray()));
 
                 if (!roomsList.equals(oldList)) { //Only if there is a new element to add
+                    System.out.println("First list: " + roomsList);
+                    System.out.println("Second list: " + oldList);
+
                     lobbyController.resetRoomList();
                     for (String name : roomsList) {
                         lobbyController.addToRoomList(name);
