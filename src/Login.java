@@ -10,7 +10,7 @@ public class Login extends Application {
     static Object mainController;
     public static void main(String[] args) {
         try {
-            RoomManager.initRegistry();
+        //    RoomManager.initRegistry();
 
         }catch (Exception e){};
         launch(args);

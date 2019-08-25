@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.Arrays;
 import java.util.List;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,15 +18,17 @@ public class Lobby implements Runnable {
     }
     public void run()
     {
+        System.out.println("timer");
         try {
             if(Login.mainController instanceof LobbyController) {
                 LobbyController lobbyController=(LobbyController)Login.mainController;
-                ArrayList<String> rooms = RoomManager.getRoomNamesFromRegistry();
+                ArrayList<String> roomsList = RoomManager.getRoomManager().getRoomsAsString();
                 List<String> oldList = lobbyController.roomList.getItems();
+                System.out.println("List: " + Arrays.toString(roomsList.toArray()));
 
-                if (!rooms.equals(oldList)) { //Only if there is a new element to add
+                if (!roomsList.equals(oldList)) { //Only if there is a new element to add
                     lobbyController.resetRoomList();
-                    for (String name : rooms) {
+                    for (String name : roomsList) {
                         lobbyController.addToRoomList(name);
                     }
                 }

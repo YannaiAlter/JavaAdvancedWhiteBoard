@@ -1,9 +1,11 @@
 import java.io.Serializable;
 import java.rmi.server.UnicastRemoteObject;
 
-class Room extends UnicastRemoteObject implements RoomInterface
+class Room
 {
     String name;
+    //Chat roomChat;
+    //ArrayList<Shape> shapes;
     public Room(String roomName) throws java.rmi.RemoteException
     {
         this.name=roomName;

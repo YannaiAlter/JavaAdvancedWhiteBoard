@@ -33,7 +33,7 @@ public class LobbyController {
     public void addToRoomList(String roomName)
     {
         roomList.getItems().add(roomName);
-        try{RoomManager.addRoom(roomName);}
+        try{RoomManager.getRoomManager().addRoom(roomName);}
         catch (Exception e){};
     }
     public void resetRoomList()
