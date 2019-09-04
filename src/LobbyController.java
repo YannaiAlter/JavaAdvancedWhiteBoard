@@ -1,5 +1,8 @@
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
@@ -8,12 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
-import java.awt.event.ActionEvent;
 import java.util.*;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LobbyController {
     @FXML
@@ -31,6 +34,32 @@ public class LobbyController {
         this.username = username;
     }
 
+    public void joinRoom(javafx.event.ActionEvent actionEvent)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomDesign.fxml"));
+        try {
+            Parent lobbyParent = loader.load();
+            Scene lobbyScene = new Scene(lobbyParent);
+            Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            mainStage.setScene(lobbyScene);
+            mainStage.show();
+            Login.mainController = loader.getController();
+            ChatIntervalRunner chat = new ChatIntervalRunner();
+            Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<javafx.event.ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Platform.runLater(chat);
+                }
+            }));
+            oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
+            oneSecondTimerUpdateList.play();
+
+            chat.setTimerUpdateList(oneSecondTimerUpdateList);
+        }
+        catch(Exception e) { System.out.println("Cant load RoomDesign: " +e);}
+
+
+    }
     public void refreshList()
     {
         Platform.runLater(new Lobby());
