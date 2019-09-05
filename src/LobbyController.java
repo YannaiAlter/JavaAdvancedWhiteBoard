@@ -45,6 +45,8 @@ public class LobbyController {
             mainStage.show();
             Login.mainController = loader.getController();
             ChatIntervalRunner chat = new ChatIntervalRunner();
+            RoomInterface roomManager = RoomManager.getRoomManager();
+            chat.setRoomManager(roomManager);
             Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<javafx.event.ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {

@@ -7,11 +7,15 @@ import java.util.List;
 
 public class ChatIntervalRunner  implements Runnable {
     Timeline timerUpdateList;
-
+    RoomInterface roomManager;
 
 
     public void setTimerUpdateList(Timeline timerUpdateList){
         this.timerUpdateList=timerUpdateList;
+    }
+    public void setRoomManager(RoomInterface room)
+    {
+        this.roomManager=room;
     }
     public void run()
     {
@@ -24,7 +28,6 @@ public class ChatIntervalRunner  implements Runnable {
             }
 
             RoomController roomController=(RoomController) Login.mainController;
-            RoomInterface roomManager = RoomManager.getRoomManager();
             if(!roomManager.isChatUpdated("hello",roomController.outputChat.getText()))
                 roomController.outputChat.setText(roomManager.getChatOfRoom("hello").getChatConversation());
         }
