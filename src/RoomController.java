@@ -14,7 +14,7 @@ public class RoomController {
         TextField t1 = new TextField(newMessage);
         outputChat.setText(outputChat.getText()+t1.getText());
         try {
-           RoomManager.getRoomManager().setRoomConversation("hello", outputChat.getText());
+           RoomManager.getRoomManager().setRoomConversation("hello", inputChat.getText());
         }
         catch(Exception e)
         {

@@ -88,15 +88,15 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
 	}
-	public void setRoomConversation(String roomName,String text) {
+	public synchronized void setRoomConversation(String roomName,String text) {
 		for (Room x : room) {
 			if (x.getName().equals(roomName)) {
-				x.getChat().setChatConversation(text);
+				x.getChat().setChatConversation(getChatOfRoom(roomName).getChatConversation() + text);
 				break;
 			}
 		}
 	}
-	public boolean isChatUpdated(String roomName,String clientChat)
+	public synchronized boolean isChatUpdated(String roomName,String clientChat)
 	{
 		for (Room x : room) {
 			if (x.getName().equals(roomName)) {
@@ -106,7 +106,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 		return false;
 	}
-	public Chat getChatOfRoom(String roomName)
+	public synchronized Chat getChatOfRoom(String roomName)
 	{
 		for (Room x : room) {
 			if (x.getName().equals(roomName)) {
