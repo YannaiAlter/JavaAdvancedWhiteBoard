@@ -64,7 +64,7 @@ public class LobbyController {
     }
     public void refreshList()
     {
-        Platform.runLater(new Lobby());
+        Platform.runLater(new Lobby(RoomManager.getRoomManager()));
     }
     public void addToRoomList(String roomName)
     {

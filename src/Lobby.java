@@ -13,17 +13,21 @@ import java.util.ArrayList;
 
 public class Lobby implements Runnable {
     Timeline timerUpdateList;
-
+    RoomInterface roomManager;
+    public Lobby(RoomInterface roomManager)
+    {
+        this.roomManager=roomManager;
+    }
     public void setTimerUpdateList(Timeline timerUpdateList){
         this.timerUpdateList=timerUpdateList;
     }
     public void run()
     {
-        System.out.println("timer");
         try {
+
             if(Login.mainController instanceof LobbyController) {
                 LobbyController lobbyController=(LobbyController)Login.mainController;
-                ArrayList<String> roomsList = RoomManager.getRoomManager().getRoomsAsString();
+                ArrayList<String> roomsList = roomManager.getRoomsAsString();
                 List<String> oldList = lobbyController.roomList.getItems();
                 System.out.println("List: " + Arrays.toString(roomsList.toArray()));
 

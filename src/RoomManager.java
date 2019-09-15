@@ -88,7 +88,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
 	}
-	public void setTextOfRoom(String roomName,String text) {
+	public void setRoomConversation(String roomName,String text) {
 		for (Room x : room) {
 			if (x.getName().equals(roomName)) {
 				x.getChat().setChatConversation(text);
