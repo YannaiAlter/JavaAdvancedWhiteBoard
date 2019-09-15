@@ -12,9 +12,8 @@ public class RoomController {
 
     void appendChat(String newMessage) {
         TextField t1 = new TextField(newMessage);
-        outputChat.setText(outputChat.getText()+t1.getText());
         try {
-           RoomManager.getRoomManager().setRoomConversation("hello", inputChat.getText());
+           RoomManager.getRoomManager().setRoomConversation("hello", inputChat.getText()+"\r\n");
         }
         catch(Exception e)
         {
@@ -24,6 +23,6 @@ public class RoomController {
 
 
     public void enterClick(ActionEvent actionEvent) {
-    appendChat(inputChat.getText() +"\n");
+    appendChat(inputChat.getText());
     }
 }
