@@ -1,20 +1,16 @@
-import javafx.scene.control.TextField;
-import javafx.scene.text.TextFlow;
-
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.net.MalformedURLException;
 import java.rmi.server.UnicastRemoteObject;
-import java.rmi.Naming;
-import java.util.Arrays;
 
+/*
+RoomManager Class is a class which his instance is created only one time and passed by the RMI to all clients.
+This class contains a list of all of the rooms that are registered, and provides the data of the rooms - chat conversation, etc.
+ */
 public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
-	ArrayList<Room> room = new ArrayList<Room>();
+	ArrayList<Room> room;
 	Registry registry;
 
 	public RoomManager() throws RemoteException {
@@ -32,36 +28,9 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	}
 
-
-	/*	public ArrayList<String> getRoomNamesFromRegistry()throws MalformedURLException, RemoteException, NotBoundException
-		{
-			ArrayList<String>roomNames = new ArrayList<String>();
-			String[]boundNames =registry.list();
-			System.out.println("hey");
-
-			for(String name : boundNames)
-			{
-				RoomInterface room = (RoomInterface)registry.lookup(name);
-				System.out.println("Room: "+room.getName());
-				roomNames.add(room.getName());
-
-			}
-			return roomNames;
-		}
-
-	 */
-	public Room getRoomWithName(String name) {
-		for (Room x : room) if (x.getName().equals(name)) return x;
-		return null;
-	}
-
-
-
 	public ArrayList<Room> getRooms() {
 		return this.room;
 	}
-
-
 
 	public static RoomInterface getRoomManager() {
 		try {
@@ -76,7 +45,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 
 	@Override
-	public ArrayList<String> getRoomsAsString() throws RemoteException {
+	public ArrayList<String> getRoomsAsString() {
 		ArrayList<String> list = new ArrayList<String>();
 		for (Room x : room) {
 			list.add(x.getName());
@@ -84,7 +53,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		return list;
 	}
 
-	public void addRoom(String roomName) throws RemoteException {
+	public void addRoom(String roomName)  {
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
 	}
@@ -115,6 +84,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 		return null;
 	}
+
 	public static void main(String args[]) {
 
 		try {

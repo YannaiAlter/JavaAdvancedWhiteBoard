@@ -9,6 +9,12 @@ import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.event.*;
 import javafx.util.*;
+/*
+The controller of the Login window, which provides functionality to the login window,
+which includes register and login button functionality.
+In case of correct login details this class will be used to switch the window to the lobby's window.
+*/
+
 public class LoginController {
 
     @FXML

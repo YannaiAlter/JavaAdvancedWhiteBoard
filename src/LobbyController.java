@@ -1,3 +1,4 @@
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -17,6 +18,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+/*
+The controller of the Lobby window, which provides functionality to the Lobby window,
+which includes refresh, join-room, create room button functionality.
+In case of clicking the join room button this class will be used to switch the window to the room's window.
+*/
 
 public class LobbyController {
     @FXML

@@ -1,16 +1,12 @@
-import com.mysql.jdbc.log.Log;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 import java.util.Arrays;
 import java.util.List;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/*
+Lobby class which checks for room updates using the RMI RoomManager instance, and updating the client's design in case of an update,
+this class is run by a timer from the LoginController every X seconds.
+*/
 public class Lobby implements Runnable {
     Timeline timerUpdateList;
     RoomInterface roomManager;

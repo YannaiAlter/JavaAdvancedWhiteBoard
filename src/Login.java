@@ -5,7 +5,11 @@ import javafx.application.Application;
         import javafx.scene.Scene;
         import javafx.stage.Stage;
 
-
+/*
+The first stage in the Client application, which is the login window.
+The user can login and register in the window. The username and passwords fields are checked in case of login or added to the DB in case of registration
+(Using the JDBCManager class).
+ */
 public class Login extends Application {
     static Object mainController;
 
