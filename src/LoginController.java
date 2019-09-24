@@ -71,7 +71,7 @@ public class LoginController {
                     mainStage.show();
                     Login.mainController = loader.getController();
                     ((LobbyController)Login.mainController).setUsername(username.getText());
-                    Lobby lobby = new Lobby(RoomManager.getRoomManager());
+                    Lobby lobby = new Lobby();
 
 
                     Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {

@@ -10,9 +10,9 @@ this class is run by a timer from the LoginController every X seconds.
 public class Lobby implements Runnable {
     Timeline timerUpdateList;
     RoomInterface roomManager;
-    public Lobby(RoomInterface roomManager)
+    public Lobby()
     {
-        this.roomManager=roomManager;
+        this.roomManager=Login.roomManager;
     }
     public void setTimerUpdateList(Timeline timerUpdateList){
         this.timerUpdateList=timerUpdateList;

@@ -15,7 +15,7 @@ class Room implements Serializable
 
     }
     public Chat getChat() { return this.chat; }
-    public String getName(){
+    public String getRoomName(){
         return this.name;
     }
     public static void main(String[]args) {

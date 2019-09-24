@@ -12,7 +12,7 @@ The user can login and register in the window. The username and passwords fields
  */
 public class Login extends Application {
     static Object mainController;
-
+    static RoomInterface roomManager = RoomManager.getRoomManager();
     public static void main(String[] args) {
 
         launch(args);
@@ -35,7 +35,7 @@ public class Login extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop()  {
         if(mainController instanceof LobbyController)//to expend when there will be rooms
             ((LobbyController) mainController).logOut();
         Platform.exit();

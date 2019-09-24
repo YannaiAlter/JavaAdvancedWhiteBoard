@@ -14,13 +14,18 @@ public class RoomController {
     @FXML
     TextField inputChat;
 
+    String username;
+
+    void setUsername(String username)
+    {
+        this.username=username;
+    }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
  */
     void appendChat(String newMessage) {
-        TextField t1 = new TextField(newMessage);
         try {
-           RoomManager.getRoomManager().setRoomConversation("hello", inputChat.getText()+"\r\n");
+           Login.roomManager.setRoomConversation(Login.roomManager.getClientRoom(username), newMessage +"\r\n");
         }
         catch(Exception e)
         {

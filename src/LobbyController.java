@@ -45,21 +45,20 @@ public class LobbyController {
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomDesign.fxml"));
         try {
+            String clickedRoomName = (String)roomList.getSelectionModel().getSelectedItem();
             Parent lobbyParent = loader.load();
             Scene lobbyScene = new Scene(lobbyParent);
             Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             mainStage.setScene(lobbyScene);
             mainStage.show();
             Login.mainController = loader.getController();
+            RoomController roomController = (RoomController)Login.mainController;
+            roomController.setUsername(username);
             ChatIntervalRunner chat = new ChatIntervalRunner();
-            RoomInterface roomManager = RoomManager.getRoomManager();
-            chat.setRoomManager(roomManager);
-            Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<javafx.event.ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Platform.runLater(chat);
-                }
-            }));
+            chat.setUsername(this.username);
+            chat.setRoomManager(Login.roomManager);
+            Login.roomManager.setClientRoom(this.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
+            Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(chat)));
             oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
             oneSecondTimerUpdateList.play();
 
@@ -71,7 +70,7 @@ public class LobbyController {
     }
     public void refreshList()
     {
-        Platform.runLater(new Lobby(RoomManager.getRoomManager()));
+        Platform.runLater(new Lobby());
     }
     public void addToRoomList(String roomName)
     {
@@ -94,7 +93,7 @@ public class LobbyController {
             System.out.println("Room's name: " + result.get());
             addToRoomList(result.get()); // adding to gui
            try {
-               RoomManager.getRoomManager().addRoom(result.get()); // adding to rmi server
+               Login.roomManager.addRoom(result.get()); // adding to rmi server
            }
            catch (Exception e)
            {
