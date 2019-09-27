@@ -45,7 +45,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		return null;
 	}
 
-	public void addShapeToRoom(String roomName, Canvas shape)
+	public void addShapeToRoom(String roomName, Shape shape)
 	{
 		for (Room x : room) {
 			if (x.getRoomName().equals(roomName)) {

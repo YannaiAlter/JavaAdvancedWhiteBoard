@@ -38,15 +38,22 @@ public void initialize() {
             new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
-                    if (State.drawState == State.Shape.LINE) {
-                        State.drawState = State.Shape.LINE_SECOND_CLICK;
+                    if (State.drawState == Shape.Type.LINE) {
+                        State.drawState = Shape.Type.LINE_SECOND_CLICK;
                         State.lastClick = new Point((int) event.getX(), (int) event.getY());
 
-                    } else if (State.drawState == State.Shape.LINE_SECOND_CLICK) {
+                    } else if (State.drawState == Shape.Type.LINE_SECOND_CLICK) {
                         graphicsContext.setStroke(Color.RED);
                         graphicsContext.setLineWidth(5);
                         graphicsContext.strokeLine(State.lastClick.getX(),State.lastClick.getY(),event.getX(),event.getY());
-                        State.drawState = State.Shape.LINE;
+                        State.drawState = Shape.Type.LINE;
+                        try {
+                            State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY())));
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
