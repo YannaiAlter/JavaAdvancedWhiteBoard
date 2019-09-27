@@ -3,12 +3,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Line;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 
 /*
@@ -37,30 +38,20 @@ public void initialize() {
             new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
-                    graphicsContext.beginPath();
-                    graphicsContext.moveTo(event.getX(), event.getY());
-                    graphicsContext.stroke();
+                    if (State.drawState == State.Shape.LINE) {
+                        State.drawState = State.Shape.LINE_SECOND_CLICK;
+                        State.lastClick = new Point((int) event.getX(), (int) event.getY());
+
+                    } else if (State.drawState == State.Shape.LINE_SECOND_CLICK) {
+                        graphicsContext.setStroke(Color.RED);
+                        graphicsContext.setLineWidth(5);
+                        graphicsContext.strokeLine(State.lastClick.getX(),State.lastClick.getY(),event.getX(),event.getY());
+                        State.drawState = State.Shape.LINE;
+                    }
                 }
             });
 
-    canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_DRAGGED,
-            new EventHandler<MouseEvent>(){
-                @Override
-                public void handle(MouseEvent event) {
-                    graphicsContext.lineTo(event.getX(), event.getY());
-                    graphicsContext.stroke();
 
-
-                }
-            });
-
-    canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_RELEASED,
-            new EventHandler<MouseEvent>(){
-                @Override
-                public void handle(MouseEvent event) {
-
-                }
-            });
 
 }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,

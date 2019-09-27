@@ -1,3 +1,6 @@
+import javafx.scene.canvas.Canvas;
+
+import java.awt.*;
 import java.io.Serializable;
 import java.rmi.server.UnicastRemoteObject;
 /*
@@ -8,7 +11,7 @@ class Room implements Serializable
 {
     String name;
     Chat chat;
-
+    Canvas canvas;
     public Room(String roomName) {
         this.name=roomName;
         chat = new Chat("");
@@ -17,6 +20,10 @@ class Room implements Serializable
     public Chat getChat() { return this.chat; }
     public String getRoomName(){
         return this.name;
+    }
+    public void addShape(Canvas canvas)
+    {
+     this.canvas=canvas;
     }
     public static void main(String[]args) {
 

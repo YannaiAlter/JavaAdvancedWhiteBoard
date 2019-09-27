@@ -1,3 +1,5 @@
+import javafx.scene.canvas.Canvas;
+
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -41,6 +43,16 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void addShapeToRoom(String roomName, Canvas shape)
+	{
+		for (Room x : room) {
+			if (x.getRoomName().equals(roomName)) {
+				x.addShape(shape);
+				break;
+			}
+		}
 	}
 
 	@Override
