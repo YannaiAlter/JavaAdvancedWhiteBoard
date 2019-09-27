@@ -12,7 +12,7 @@ public class Lobby implements Runnable {
     RoomInterface roomManager;
     public Lobby()
     {
-        this.roomManager=Login.roomManager;
+        this.roomManager=State.roomManager;
     }
     public void setTimerUpdateList(Timeline timerUpdateList){
         this.timerUpdateList=timerUpdateList;
@@ -21,8 +21,8 @@ public class Lobby implements Runnable {
     {
         try {
 
-            if(Login.mainController instanceof LobbyController) {
-                LobbyController lobbyController=(LobbyController)Login.mainController;
+            if(State.mainController instanceof LobbyController) {
+                LobbyController lobbyController=(LobbyController)State.mainController;
                 ArrayList<String> roomsList = roomManager.getRoomsAsString();
                 List<String> oldList = lobbyController.roomList.getItems();
                 System.out.println("List: " + Arrays.toString(roomsList.toArray()));

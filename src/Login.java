@@ -11,8 +11,7 @@ The user can login and register in the window. The username and passwords fields
 (Using the JDBCManager class).
  */
 public class Login extends Application {
-    static Object mainController;
-    static RoomInterface roomManager = RoomManager.getRoomManager();
+
     public static void main(String[] args) {
 
         launch(args);
@@ -23,7 +22,7 @@ public class Login extends Application {
         try {
             FXMLLoader loader  = new FXMLLoader(getClass().getResource("LoginDesign.fxml"));
             Parent root = loader.load();
-            mainController = loader.getController();
+            State.mainController = loader.getController();
             Scene scene = new Scene(root, 700, 500);
 
             stage.setTitle("Login");
@@ -36,8 +35,8 @@ public class Login extends Application {
 
     @Override
     public void stop()  {
-        if(mainController instanceof LobbyController)//to expend when there will be rooms
-            ((LobbyController) mainController).logOut();
+        if(State.mainController instanceof LobbyController)//to expend when there will be rooms
+            ((LobbyController) State.mainController).logOut();
         Platform.exit();
     }
 }

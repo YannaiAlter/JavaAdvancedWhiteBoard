@@ -35,11 +35,6 @@ public class LobbyController {
     @FXML
     Button disconnect;
 
-    String username;
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void joinRoom(javafx.event.ActionEvent actionEvent)
     {
@@ -51,13 +46,10 @@ public class LobbyController {
             Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             mainStage.setScene(lobbyScene);
             mainStage.show();
-            Login.mainController = loader.getController();
-            RoomController roomController = (RoomController)Login.mainController;
-            roomController.setUsername(username);
+            State.mainController = loader.getController();
             ChatIntervalRunner chat = new ChatIntervalRunner();
-            chat.setUsername(this.username);
-            chat.setRoomManager(Login.roomManager);
-            Login.roomManager.setClientRoom(this.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
+            chat.setRoomManager(State.roomManager);
+            State.roomManager.setClientRoom(State.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
             Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(chat)));
             oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
             oneSecondTimerUpdateList.play();
@@ -93,7 +85,7 @@ public class LobbyController {
             System.out.println("Room's name: " + result.get());
             addToRoomList(result.get()); // adding to gui
            try {
-               Login.roomManager.addRoom(result.get()); // adding to rmi server
+               State.roomManager.addRoom(result.get()); // adding to rmi server
            }
            catch (Exception e)
            {
@@ -114,13 +106,13 @@ public class LobbyController {
             Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             mainStage.setScene(loginScene);
             mainStage.show();
-            Login.mainController=loader.getController();
+            State.mainController=loader.getController();
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
     public void logOut(){
-        JDBCManager.LogInOutUser(username,false);
+        JDBCManager.LogInOutUser(State.username,false);
     }
 }
