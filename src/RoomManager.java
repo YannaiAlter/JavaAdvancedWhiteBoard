@@ -10,6 +10,7 @@ This class contains a list of all of the rooms that are registered, and provides
  */
 public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
+	private final Object chatLock = new Object();
 	ArrayList<Room> room;
 	Registry registry;
 	HashMap<String, String> roomOfClient; //Client username to room name
@@ -29,11 +30,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 
 	}
-
-	public ArrayList<Room> getRooms() {
-		return this.room;
-	}
-
+	
 	public static RoomInterface getRoomManager() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
@@ -59,32 +56,39 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
 	}
-	public synchronized void setRoomConversation(String roomName,String text) {
-		for (Room x : room) {
-			if (x.getRoomName().equals(roomName)) {
-				x.getChat().setChatConversation(getChatOfRoom(roomName).getChatConversation() + text);
-				break;
+	public void setRoomConversation(String roomName,String text) {
+		synchronized (chatLock) {
+			for (Room x : room) {
+				if (x.getRoomName().equals(roomName)) {
+					x.getChat().setChatConversation(getChatOfRoom(roomName).getChatConversation() + text);
+					break;
+				}
 			}
 		}
 	}
-	public synchronized boolean isChatUpdated(String roomName,String clientChat)
+	public boolean isChatUpdated(String roomName,String clientChat)
 	{
-		for (Room x : room) {
-			if (x.getRoomName().equals(roomName)) {
-				if(x.getChat() == null) return false;
-				return x.getChat().getChatConversation().equals(clientChat);
+		synchronized (chatLock) {
+			for (Room x : room) {
+				if (x.getRoomName().equals(roomName)) {
+					if (x.getChat() == null) return false;
+					return x.getChat().getChatConversation().equals(clientChat);
+				}
 			}
+			return false;
 		}
-		return false;
 	}
-	public synchronized Chat getChatOfRoom(String roomName)
+	public  Chat getChatOfRoom(String roomName)
 	{
-		for (Room x : room) {
-			if (x.getRoomName().equals(roomName)) {
-				return x.getChat();
+		synchronized (chatLock) {
+
+			for (Room x : room) {
+				if (x.getRoomName().equals(roomName)) {
+					return x.getChat();
+				}
 			}
+			return null;
 		}
-		return null;
 	}
 	public void setClientRoom(String key, String value) {
 		roomOfClient.put(key,value);
@@ -99,12 +103,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		try {
 			RoomManager room = new RoomManager();
 			getRoomManager();
-			while (true) {
-				for (Room x : room.getRooms()) {
-					System.out.print(x);
-					System.out.println();
-				}
-			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

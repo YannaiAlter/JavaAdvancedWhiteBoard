@@ -6,7 +6,6 @@ RoomInterface is the interface of RoomManager and order to pass those functions 
  */
 public interface RoomInterface extends Remote {
     void addRoom(String roomName) throws RemoteException;
-    ArrayList<Room> getRooms() throws RemoteException;
     ArrayList<String> getRoomsAsString() throws RemoteException;
     void setRoomConversation(String roomName,String text) throws RemoteException;
     boolean isChatUpdated(String roomName,String clientChat) throws  RemoteException;

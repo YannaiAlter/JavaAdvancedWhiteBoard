@@ -48,8 +48,12 @@ public class LobbyController {
             mainStage.show();
             State.mainController = loader.getController();
             ChatIntervalRunner chat = new ChatIntervalRunner();
-            chat.setRoomManager(State.roomManager);
+
+            /* Updating relevant states*/
+            State.roomName=clickedRoomName;
             State.roomManager.setClientRoom(State.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
+            State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the chat. \r\n");
+            /*Calling Timer Chat interval*/
             Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(chat)));
             oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
             oneSecondTimerUpdateList.play();
@@ -79,13 +83,13 @@ public class LobbyController {
         //dialog.setHeaderText("Look, a Text Input Dialog");
         dialog.setContentText("Please enter the wanted room's name:");
 
-// Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             System.out.println("Room's name: " + result.get());
             addToRoomList(result.get()); // adding to gui
            try {
                State.roomManager.addRoom(result.get()); // adding to rmi server
+
            }
            catch (Exception e)
            {
