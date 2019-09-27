@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -73,7 +74,7 @@
             </GridPane>
          </bottom>
       </BorderPane>
-      <BorderPane prefHeight="698.0" prefWidth="376.0" GridPane.columnIndex="1">
+      <BorderPane fx:id="whiteBoard" prefHeight="698.0" prefWidth="376.0" GridPane.columnIndex="1">
          <bottom>
             <Pane id="toolbox" prefHeight="42.0" prefWidth="346.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
@@ -86,6 +87,9 @@
                </children>
             </Pane>
          </bottom>
+         <top>
+            <Canvas fx:id="canvasWhiteBoard" height="597.0" width="461.0" BorderPane.alignment="CENTER" />
+         </top>
       </BorderPane>
    </children>
 </GridPane>
