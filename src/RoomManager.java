@@ -14,7 +14,7 @@ This class contains a list of all of the rooms that are registered, and provides
 public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	private final Object chatLock = new Object();
-	private final Object whiteBoardUpdateLock = new Object();
+	private HashMap roomLocker=new HashMap(); //Locks specific room with synchronized
 
 	ArrayList<Room> room;
 	Registry registry;
@@ -50,12 +50,11 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	public void addShapeToRoom(String roomName, Shape shape)
 	{
-		for (Room x : room) {
-			if (x.getRoomName().equals(roomName)) {
-				x.addShape(shape);
-				break;
-			}
-		}
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
+			Room x = getRoom(roomName);
+			x.addShape(shape);		}
+		roomLocker.remove(roomName);
 	}
 
 	@Override
@@ -68,6 +67,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 
 	public void addRoom(String roomName)  {
+
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
 	}
@@ -83,27 +83,36 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 	public boolean isChatUpdated(String roomName,String clientChat)
 	{
-		synchronized (chatLock) {
-			for (Room x : room) {
-				if (x.getRoomName().equals(roomName)) {
-					if (x.getChat() == null) return false;
-					return x.getChat().getChatConversation().equals(clientChat);
-				}
+
+		roomLocker.put(roomName,new Object());
+		Room x;
+		synchronized (roomLocker) {
+			 x = getRoom(roomName);
 			}
-			return false;
-		}
+		roomLocker.remove(roomName);
+		if(x != null)
+		return x.getChat().getChatConversation().equals(clientChat);
+
+		return true;
+
 	}
 	public  Chat getChatOfRoom(String roomName)
 	{
-		synchronized (chatLock) {
-
+		Chat chat = null;
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
 			for (Room x : room) {
 				if (x.getRoomName().equals(roomName)) {
-					return x.getChat();
+					chat = x.getChat();
 				}
 			}
-			return null;
 		}
+		roomLocker.remove(roomName);
+		if(chat != null)
+		return chat;
+
+		return null;
+
 	}
 	public void setClientRoom(String key, String value) {
 		roomOfClient.put(key,value);
@@ -136,18 +145,23 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 
 	public boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) {
-		synchronized (whiteBoardUpdateLock) {
-			Room room = getRoom(roomName);
-			return room.getDate().equals(clientLastUpdateTime);
+		roomLocker.put(roomName,new Object());
+		Room room;
+		synchronized (roomLocker) {
+			 room = getRoom(roomName);
 		}
+		roomLocker.remove(roomName);
+		return room.getDate().equals(clientLastUpdateTime);
 	}
 
 	public void  updateGraphicsTime(String roomName)
 	{
-		synchronized (whiteBoardUpdateLock) {
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
 			Room room = getRoom(roomName);
 			room.doUpdate();
 		}
+		roomLocker.remove(roomName);
 	}
 	public Date getWhiteBoardUpdateTimeOfRoom(String roomName)
 	{
@@ -156,12 +170,33 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	public ArrayList<Shape> getAllShapesOfRoom(String roomName)
 	{
-		Room room = this.getRoom(roomName);
+		Room room;
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
+			room = this.getRoom(roomName);
+		}
+		roomLocker.remove(roomName);
 		return room.getShapes();
+
 	}
 	public void undoShapeOfRoom(String roomName)
 	{
-		Room room = this.getRoom(roomName);
-		room.undoShape();
+
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
+			Room room = this.getRoom(roomName);
+			room.undoShape();
+		}
+		roomLocker.remove(roomName);
+	}
+	public void redoShapeOfRoom(String roomName)
+	{
+
+		roomLocker.put(roomName,new Object());
+		synchronized (roomLocker) {
+			Room room = this.getRoom(roomName);
+			room.redoShape();
+		}
+		roomLocker.remove(roomName);
 	}
 }

@@ -20,4 +20,5 @@ public interface RoomInterface extends Remote {
     Date getWhiteBoardUpdateTimeOfRoom(String roomName) throws RemoteException;
     ArrayList<Shape> getAllShapesOfRoom(String roomName) throws RemoteException;
     void undoShapeOfRoom(String roomName) throws RemoteException;
+    void redoShapeOfRoom(String roomName) throws RemoteException;
 }

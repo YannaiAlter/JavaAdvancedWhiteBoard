@@ -55,14 +55,14 @@ public class LobbyController {
             State.roomManager.setClientRoom(State.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
             State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the room. \r\n");
             /*Calling Timer Chat interval*/
-            Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(chat)));
+            Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.millis(DBFinals.CHAT_UPDATE_INTERVAL_TIME), event -> Platform.runLater(chat)));
             oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
             oneSecondTimerUpdateList.play();
 
             chat.setTimerUpdateList(oneSecondTimerUpdateList);
 
             GraphicsIntervalRunner graphics = new GraphicsIntervalRunner();
-            Timeline updateGraphicsTimer = new Timeline(new KeyFrame(Duration.seconds(DBFinals.WHITEBOARD_UPDATES_INTERVAL_TIME), event -> Platform.runLater(graphics)));
+            Timeline updateGraphicsTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.WHITEBOARD_UPDATES_INTERVAL_TIME), event -> Platform.runLater(graphics)));
             updateGraphicsTimer.setCycleCount(Timeline.INDEFINITE);
             updateGraphicsTimer.play();
             graphics.setTimerUpdateList(oneSecondTimerUpdateList);

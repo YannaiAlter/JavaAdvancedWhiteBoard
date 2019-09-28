@@ -85,7 +85,8 @@
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
-                  <ColumnConstraints />
+                  <ColumnConstraints maxWidth="96.0" minWidth="10.0" prefWidth="46.0" />
+                  <ColumnConstraints maxWidth="92.0" minWidth="41.0" prefWidth="91.0" />
                   <ColumnConstraints />
                </columnConstraints>
                <rowConstraints>
@@ -110,7 +111,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="logout" fx:id="logout" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
+                  <Label id="logout" fx:id="logout" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
@@ -120,13 +121,18 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="text" fx:id="textLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onTextClick" prefHeight="32.0" prefWidth="37.0" text="T" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="text" fx:id="textLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onTextClick" prefHeight="32.0" prefWidth="37.0" text="T" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                      <font>
                         <Font name="Arial Bold" size="28.0" />
                      </font>
+                  </Label>
+                  <Label id="redo" fx:id="redoLabel" onMouseClicked="#onRedoClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
                   </Label>
                </children>
                <BorderPane.margin>

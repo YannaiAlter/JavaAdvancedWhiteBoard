@@ -17,6 +17,7 @@ class Room implements Serializable
     String name;
     Chat chat;
     ArrayList<Shape> shape = new ArrayList<>();
+    ArrayList<Shape> undoShapes = new ArrayList<>();
     Date updateTime;
     public Room(String roomName) {
         this.name=roomName;
@@ -38,7 +39,15 @@ class Room implements Serializable
     public void undoShape()
     {
         if(this.shape.size() == 0) return;//If we are pressing undo while there is no objects on screen.
+        undoShapes.add(shape.get(shape.size()-1)); // adding to undoShapes which will behave like a stack saver
         this.shape.remove(this.shape.size()-1);
+        doUpdate();
+    }
+    public void redoShape()
+    {
+        if(this.undoShapes.size() == 0) return;//If we are pressing redo while there is no what to redo.
+        this.shape.add(this.undoShapes.get(this.undoShapes.size()-1));
+        this.undoShapes.remove(this.undoShapes.size()-1);
         doUpdate();
     }
 

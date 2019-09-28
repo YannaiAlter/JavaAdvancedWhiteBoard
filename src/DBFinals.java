@@ -6,7 +6,7 @@ public class DBFinals {
     final static String password="yanayyanay";
     final static String RMIHost = "localhost";
     final static int RMIPort = 1099;
-    final static int WHITEBOARD_UPDATES_INTERVAL_TIME = 1; //1 Second
-    final static int ROOMLIST_UPDATES_INTERVAL_TIME = 1; //1 Second
-
+    final static double WHITEBOARD_UPDATES_INTERVAL_TIME = 500; //in millis
+    final static double ROOMLIST_UPDATES_INTERVAL_TIME = 500; //in millis
+    final static int CHAT_UPDATE_INTERVAL_TIME = 500; //in millis
 }

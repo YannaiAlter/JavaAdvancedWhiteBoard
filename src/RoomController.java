@@ -51,6 +51,8 @@ public class RoomController {
     Label lineLabel;
     @FXML
     Label textLabel;
+    @FXML
+    Label redoLabel;
 
     private GraphicsContext graphicsContext;
 
@@ -233,7 +235,7 @@ public void initialize() {
             State.mainController = loader.getController();
 
             Lobby lobby = new Lobby();
-            Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
+            Timeline roomListTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
             lobby.setTimerUpdateList(roomListTimer);
             roomListTimer.setCycleCount(Timeline.INDEFINITE);
             roomListTimer.play();
@@ -250,6 +252,14 @@ public void initialize() {
     {
         try {
             State.roomManager.undoShapeOfRoom(State.roomName);
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }
+
+    public void onRedoClick(MouseEvent event)
+    {
+        try {
+            State.roomManager.redoShapeOfRoom(State.roomName);
         }
         catch (Exception e) { e.printStackTrace(); }
     }
