@@ -145,8 +145,8 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 
 	public boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) {
-		roomLocker.put(roomName,new Object());
 		Room room;
+		roomLocker.put(roomName,new Object());
 		synchronized (roomLocker) {
 			 room = getRoom(roomName);
 		}
