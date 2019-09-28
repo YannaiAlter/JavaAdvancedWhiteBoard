@@ -7,6 +7,7 @@ public class Shape implements Serializable {
     Shape () { type = Type.LINE; }//Default is LINE (If nothing clicked).
     static void draw(ArrayList<Shape> shapes)//static are ignored in serialization
     {
+        if(shapes.size() == 0) return;
         for(Shape shape : shapes)
         {
             shape.draw();

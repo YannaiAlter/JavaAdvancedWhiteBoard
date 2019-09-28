@@ -159,4 +159,9 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		Room room = this.getRoom(roomName);
 		return room.getShapes();
 	}
+	public void undoShapeOfRoom(String roomName)
+	{
+		Room room = this.getRoom(roomName);
+		room.undoShape();
+	}
 }

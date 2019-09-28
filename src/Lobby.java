@@ -12,6 +12,7 @@ public class Lobby implements Runnable {
     RoomInterface roomManager;
     public Lobby()
     {
+        timerUpdateList = new Timeline();
         this.roomManager=State.roomManager;
     }
     public void setTimerUpdateList(Timeline timerUpdateList){

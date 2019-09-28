@@ -37,15 +37,16 @@ public class RoomController {
     Canvas canvasWhiteBoard;
     @FXML
     Label logout;
+    @FXML
+    Label undo;
 
     private GraphicsContext graphicsContext;
-
 
 
     @FXML
 public void initialize() {
             graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
-            initDraw(graphicsContext);
+            initDraw();
             canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
             new EventHandler<MouseEvent>(){
                 @Override
@@ -72,9 +73,13 @@ public void initialize() {
             });
 }
 
+    public void clearWhiteBoard()
+    {
+        graphicsContext.clearRect(0, 0, canvasWhiteBoard.getWidth(), canvasWhiteBoard.getHeight());
+    }
     void drawLine(Point p1, Point p2)
     {
-        initDraw(graphicsContext);
+        initDraw();
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
         graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
@@ -94,24 +99,24 @@ public void initialize() {
     /*Credit:
     http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
      */
-    private void initDraw(GraphicsContext gc){
-        double canvasWidth = gc.getCanvas().getWidth();
-        double canvasHeight = gc.getCanvas().getHeight();
+    public void initDraw(){
+        double canvasWidth = graphicsContext.getCanvas().getWidth();
+        double canvasHeight = graphicsContext.getCanvas().getHeight();
 
-        gc.setFill(Color.LIGHTGRAY);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(5);
+        graphicsContext.setFill(Color.LIGHTGRAY);
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.setLineWidth(5);
 
-        gc.fill();
-        gc.strokeRect(
+        graphicsContext.fill();
+        graphicsContext.strokeRect(
                 0,              //x of the upper left corner
                 0,              //y of the upper left corner
                 canvasWidth,    //width of the rectangle
                 canvasHeight);  //height of the rectangle
 
-        gc.setFill(Color.RED);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(1);
+        graphicsContext.setFill(Color.RED);
+        graphicsContext.setStroke(Color.BLUE);
+        graphicsContext.setLineWidth(1);
 
     }
 
@@ -137,6 +142,7 @@ public void initialize() {
                     Platform.runLater(lobby);
                 }
             }));
+            lobby.setTimerUpdateList(roomListTimer);
             roomListTimer.setCycleCount(Timeline.INDEFINITE);
             roomListTimer.play();
 
@@ -146,5 +152,13 @@ public void initialize() {
     public void enterClick() {
     appendChat(inputChat.getText());
     System.out.println("appended");
+    }
+
+    public void onUndoClicked(MouseEvent event)
+    {
+        try {
+            State.roomManager.undoShapeOfRoom(State.roomName);
+        }
+        catch (Exception e) { e.printStackTrace(); }
     }
 }

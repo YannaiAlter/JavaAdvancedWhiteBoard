@@ -74,17 +74,10 @@ public class LoginController {
                     State.username=username.getText();
                 //    ((LobbyController)State.mainController).setUsername(username.getText());
                     Lobby lobby = new Lobby();
-                    Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
-                        @Override
-                        public void handle(ActionEvent event) {
-                            Platform.runLater(lobby);
-                        }
-                    }));
+                    Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(lobby)));
+                    lobby.setTimerUpdateList(roomListTimer);
                     roomListTimer.setCycleCount(Timeline.INDEFINITE);
                     roomListTimer.play();
-
-                    lobby.setTimerUpdateList(roomListTimer);
                     break;
                 case 1:
                     status.setText("Unidentified username.");

@@ -35,7 +35,11 @@ class Room implements Serializable
     }
     public void doUpdate() {this.updateTime=new Date(System.currentTimeMillis());}
     public ArrayList<Shape> getShapes() { return this.shape; }
-    public static void main(String[]args) {
-
+    public void undoShape()
+    {
+        if(this.shape.size() == 0) return;//If we are pressing undo while there is no objects on screen.
+        this.shape.remove(this.shape.size()-1);
+        doUpdate();
     }
+
 }

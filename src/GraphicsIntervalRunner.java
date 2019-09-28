@@ -24,6 +24,8 @@ public class GraphicsIntervalRunner implements Runnable {
                 System.out.println("Updating room");
                 State.lastTimeUpdatedGraphics = State.roomManager.getWhiteBoardUpdateTimeOfRoom(State.roomName);
                 ArrayList<Shape> shapes = State.roomManager.getAllShapesOfRoom(State.roomName);
+                roomController.clearWhiteBoard();
+                roomController.initDraw();
                 Shape.draw(shapes);
             }
 
