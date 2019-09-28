@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
@@ -17,10 +18,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.util.Optional;
 
 
 /*
@@ -46,6 +49,8 @@ public class RoomController {
     Label rectangleLabel;
     @FXML
     Label lineLabel;
+    @FXML
+    Label textLabel;
 
     private GraphicsContext graphicsContext;
 
@@ -94,6 +99,23 @@ public void initialize() {
                             State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50));
                             State.roomManager.updateGraphicsTime(State.roomName);
                         } catch (Exception e) { e.printStackTrace(); }
+                    }
+                    else if(State.drawState == Shape.Type.TEXT)
+                    {
+                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                        TextInputDialog dialog = new TextInputDialog("walter");
+                        dialog.setTitle("Room's Name");
+                        dialog.setContentText("Please enter text:");
+
+                        Optional<String> result = dialog.showAndWait();
+                        if (!result.isPresent()) return;
+
+                        drawText(result.get(),clickedPoint);
+                        try {
+                            State.roomManager.addShapeToRoom(State.roomName, new Text(result.get(), clickedPoint));
+                            State.roomManager.updateGraphicsTime(State.roomName);
+                        } catch (Exception e) { e.printStackTrace(); }
+
 
 
                     }
@@ -121,6 +143,12 @@ public void initialize() {
     {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeOval(p1.getX(),p1.getY(),radiusX,radiusY);
+    }
+    void drawText(String text, Point p1)
+    {
+        graphicsContext.setFont(new Font("Arial", 20));
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillText(text,p1.getX(),p1.getY());
     }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
@@ -165,6 +193,14 @@ public void initialize() {
         if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
         State.currentToolBoxItemClicked = this.circleLabel;
         circleLabel.setStyle(blueBorder);
+    }
+    public void onTextClick()
+    {
+        String blueBorder = textLabel.getStyle() + "-fx-border-color: blue;";
+        State.drawState = Shape.Type.TEXT;
+        if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
+        State.currentToolBoxItemClicked = this.textLabel;
+        textLabel.setStyle(blueBorder);
     }
     public void onRectangleClick()
     {

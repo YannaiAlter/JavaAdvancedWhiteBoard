@@ -59,7 +59,7 @@
     -fx-background-position: center;
 }
 
-#pencil:hover, #circle:hover, #rectangle:hover, #logout:hover, #undo:hover, #line:hover
+#pencil:hover, #circle:hover, #rectangle:hover, #logout:hover, #undo:hover, #line:hover, #text:hover
 {
     -fx-border-color: #0066ff;
 	-fx-border-width: 2;

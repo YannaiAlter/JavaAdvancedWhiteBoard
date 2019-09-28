@@ -85,7 +85,7 @@
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints />
                   <ColumnConstraints />
                </columnConstraints>
                <rowConstraints>
@@ -119,6 +119,14 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
+                  </Label>
+                  <Label id="text" fx:id="textLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onTextClick" prefHeight="32.0" prefWidth="37.0" text="T" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="Arial Bold" size="28.0" />
+                     </font>
                   </Label>
                </children>
                <BorderPane.margin>

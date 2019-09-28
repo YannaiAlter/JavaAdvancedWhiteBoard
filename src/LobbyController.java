@@ -87,7 +87,6 @@ public class LobbyController {
     {
         TextInputDialog dialog = new TextInputDialog("walter");
         dialog.setTitle("Room's Name");
-        //dialog.setHeaderText("Look, a Text Input Dialog");
         dialog.setContentText("Please enter the wanted room's name:");
 
         Optional<String> result = dialog.showAndWait();
