@@ -20,6 +20,7 @@ public class Login extends Application {
     @Override
     public void start(Stage stage) {
         try {
+
             FXMLLoader loader  = new FXMLLoader(getClass().getResource("LoginDesign.fxml"));
             Parent root = loader.load();
             State.mainController = loader.getController();

@@ -38,8 +38,8 @@ public class LobbyController {
 
     public void joinRoom(javafx.event.ActionEvent actionEvent)
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomDesign.fxml"));
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomDesign.fxml"));
             String clickedRoomName = (String)roomList.getSelectionModel().getSelectedItem();
             Parent lobbyParent = loader.load();
             Scene lobbyScene = new Scene(lobbyParent);

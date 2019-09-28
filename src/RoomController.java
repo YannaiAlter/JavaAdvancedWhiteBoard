@@ -1,5 +1,13 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -8,6 +16,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 
@@ -25,8 +35,10 @@ public class RoomController {
     BorderPane WhiteBoard;
     @FXML
     Canvas canvasWhiteBoard;
+    @FXML
+    Label logout;
 
-    GraphicsContext graphicsContext;
+    private GraphicsContext graphicsContext;
 
 
 
@@ -62,6 +74,7 @@ public void initialize() {
 
     void drawLine(Point p1, Point p2)
     {
+        initDraw(graphicsContext);
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
         graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
@@ -102,7 +115,35 @@ public void initialize() {
 
     }
 
-    public void enterClick(ActionEvent actionEvent) {
+    public void logoutClicked(MouseEvent actionEvent)
+    {
+        try {
+            State.roomManager.setRoomConversation(State.roomName,"[Server]: User " + State.username + " has left the chat. \r\n");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
+            Parent lobbyParent = loader.load();
+            Scene lobbyScene = new Scene(lobbyParent);
+            Stage mainStage = (Stage) ((Label) actionEvent.getSource()).getScene().getWindow();
+            mainStage.setScene(lobbyScene);
+            mainStage.show();
+
+            State.mainController = loader.getController();
+
+            Lobby lobby = new Lobby();
+            Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    Platform.runLater(lobby);
+                }
+            }));
+            roomListTimer.setCycleCount(Timeline.INDEFINITE);
+            roomListTimer.play();
+
+        }
+        catch (Exception e){e.printStackTrace();}
+    }
+    public void enterClick() {
     appendChat(inputChat.getText());
     System.out.println("appended");
     }
