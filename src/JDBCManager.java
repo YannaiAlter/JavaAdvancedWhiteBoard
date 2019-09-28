@@ -7,7 +7,7 @@ public class JDBCManager {
             PreparedStatement pt = null; // manages prepared statement
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
-            pt = connection.prepareStatement("select username,password,loggedin from accounts ");
+            pt = connection.prepareStatement("select username,password,loggedin from accounts for update");
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 System.out.println(rs.getString("username"));
@@ -33,7 +33,7 @@ public class JDBCManager {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-            pt = connection.prepareStatement("select username,password from accounts where username=?");
+            pt = connection.prepareStatement("select username,password from accounts where username=? for update"); //select for update will lock database
 
             // process query results
             pt.setString(1, username);
@@ -73,7 +73,7 @@ public class JDBCManager {
             connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
             // query database
-            pt = connection.prepareStatement("select username,password,loggedin from accounts where username=?");
+            pt = connection.prepareStatement("select username,password,loggedin from accounts where username=? for update");
 
             // process query results
             pt.setString(1, username);
