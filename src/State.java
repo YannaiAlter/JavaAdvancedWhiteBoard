@@ -1,3 +1,4 @@
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ public class State {
     static Point lastClick;
     static Date lastTimeUpdatedGraphics;
     static Shape.Type drawState = Shape.Type.LINE;
+    static Label currentToolBoxItemClicked;
     static String username;
     static String roomName;
 }

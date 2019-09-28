@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.canvas.Canvas;
@@ -39,6 +40,10 @@ public class RoomController {
     Label logout;
     @FXML
     Label undo;
+    @FXML
+    Label circleLabel;
+    @FXML
+    Label rectangleLabel;
 
     private GraphicsContext graphicsContext;
 
@@ -69,6 +74,17 @@ public void initialize() {
                             e.printStackTrace();
                         }
                     }
+                    else if(State.drawState == Shape.Type.RECTANGLE)
+                    {
+                        System.out.println("draw");
+                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                        drawRectangle(clickedPoint,50,50);
+                        try {
+                            State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint));
+                            State.roomManager.updateGraphicsTime(State.roomName);
+                        } catch (Exception e) { e.printStackTrace(); }
+
+                    }
                 }
             });
 }
@@ -83,6 +99,10 @@ public void initialize() {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
         graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
+    }
+    void drawRectangle(Point p1,int width,int height)
+    {
+        graphicsContext.strokeRect(p1.getX(),p1.getY(),width,height);
     }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
@@ -120,10 +140,26 @@ public void initialize() {
 
     }
 
+    public void onCircleClick()
+    {
+        String blueBorder = circleLabel.getStyle() + "-fx-border-color: blue;";
+        State.drawState = Shape.Type.CIRCLE;
+        if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
+        State.currentToolBoxItemClicked = this.circleLabel;
+        circleLabel.setStyle(blueBorder);
+    }
+    public void onRectangleClick()
+    {
+        String blueBorder = rectangleLabel.getStyle() + "-fx-border-color: blue;";
+        State.drawState = Shape.Type.RECTANGLE;
+        if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
+        State.currentToolBoxItemClicked = this.rectangleLabel;
+        rectangleLabel.setStyle(blueBorder);
+    }
     public void logoutClicked(MouseEvent actionEvent)
     {
         try {
-            State.roomManager.setRoomConversation(State.roomName,"[Server]: User " + State.username + " has left the chat. \r\n");
+            State.roomManager.setRoomConversation(State.roomName,"[Server]: User " + State.username + " has left the room. \r\n");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
             Parent lobbyParent = loader.load();
@@ -151,6 +187,7 @@ public void initialize() {
     }
     public void enterClick() {
     appendChat(inputChat.getText());
+    inputChat.setText(null);
     System.out.println("appended");
     }
 

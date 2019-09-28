@@ -53,7 +53,7 @@ public class LobbyController {
             State.lastTimeUpdatedGraphics = new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
             State.roomName=clickedRoomName;
             State.roomManager.setClientRoom(State.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
-            State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the chat. \r\n");
+            State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the room. \r\n");
             /*Calling Timer Chat interval*/
             Timeline oneSecondTimerUpdateList = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(chat)));
             oneSecondTimerUpdateList.setCycleCount(Timeline.INDEFINITE);
