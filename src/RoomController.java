@@ -26,15 +26,15 @@ public class RoomController {
     @FXML
     Canvas canvasWhiteBoard;
 
+    GraphicsContext graphicsContext;
 
 
 
-@FXML
+    @FXML
 public void initialize() {
-
-    final GraphicsContext graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
-    initDraw(graphicsContext);
-    canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
+            graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
+            initDraw(graphicsContext);
+            canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
             new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
@@ -43,12 +43,13 @@ public void initialize() {
                         State.lastClick = new Point((int) event.getX(), (int) event.getY());
 
                     } else if (State.drawState == Shape.Type.LINE_SECOND_CLICK) {
-                        graphicsContext.setStroke(Color.RED);
-                        graphicsContext.setLineWidth(5);
-                        graphicsContext.strokeLine(State.lastClick.getX(),State.lastClick.getY(),event.getX(),event.getY());
+                        Point firstClick = State.lastClick;
+                        Point secondClick = new Point((int)event.getX(),(int)event.getY());
+                        drawLine(firstClick,secondClick);
                         State.drawState = Shape.Type.LINE;
                         try {
                             State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY())));
+                            State.roomManager.updateGraphicsTime(State.roomName);
                         }
                         catch (Exception e)
                         {
@@ -57,10 +58,14 @@ public void initialize() {
                     }
                 }
             });
-
-
-
 }
+
+    void drawLine(Point p1, Point p2)
+    {
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.setLineWidth(5);
+        graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
+    }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
  */

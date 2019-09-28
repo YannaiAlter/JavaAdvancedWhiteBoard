@@ -32,6 +32,6 @@ public class ChatIntervalRunner  implements Runnable {
         }
         catch (Exception e) {
             e.printStackTrace();
-        };
+        }
     }
 }

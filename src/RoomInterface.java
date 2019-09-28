@@ -14,7 +14,9 @@ public interface RoomInterface extends Remote {
     Chat getChatOfRoom(String roomName) throws RemoteException;
     void setClientRoom(String username, String roomname) throws RemoteException;
     void addShapeToRoom(String roomName, Shape shape) throws  RemoteException;
-   // boolean isBoardUpdated(String roomName) throws RemoteException;
+    void updateGraphicsTime(String roomName) throws  RemoteException;
+    boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) throws RemoteException;
     String getClientRoom(String username) throws RemoteException;
-
+    Date getWhiteBoardUpdateTimeOfRoom(String roomName) throws RemoteException;
+    ArrayList<Shape> getAllShapesOfRoom(String roomName) throws RemoteException;
 }

@@ -50,6 +50,7 @@ public class LobbyController {
             ChatIntervalRunner chat = new ChatIntervalRunner();
 
             /* Updating relevant states*/
+            State.lastTimeUpdatedGraphics = new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
             State.roomName=clickedRoomName;
             State.roomManager.setClientRoom(State.username,clickedRoomName);//Updating in roomManager that a client has joined the room.
             State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the chat. \r\n");
@@ -59,6 +60,12 @@ public class LobbyController {
             oneSecondTimerUpdateList.play();
 
             chat.setTimerUpdateList(oneSecondTimerUpdateList);
+
+            GraphicsIntervalRunner graphics = new GraphicsIntervalRunner();
+            Timeline updateGraphicsTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(graphics)));
+            updateGraphicsTimer.setCycleCount(Timeline.INDEFINITE);
+            updateGraphicsTimer.play();
+            graphics.setTimerUpdateList(oneSecondTimerUpdateList);
         }
         catch(Exception e) { System.out.println("Cant load RoomDesign: " +e);}
 

@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Date;
 import java.util.HashMap;
 /*
 RoomManager Class is a class which his instance is created only one time and passed by the RMI to all clients.
@@ -13,6 +14,8 @@ This class contains a list of all of the rooms that are registered, and provides
 public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	private final Object chatLock = new Object();
+	private final Object whiteBoardUpdateLock = new Object();
+
 	ArrayList<Room> room;
 	Registry registry;
 	HashMap<String, String> roomOfClient; //Client username to room name
@@ -122,4 +125,38 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	}
 
+	private Room getRoom(String roomName)
+	{
+		for (Room x : room) {
+			if (x.getRoomName().equals(roomName)) {
+				return x;
+			}
+		}
+		return null;
+	}
+
+	public boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) {
+		synchronized (whiteBoardUpdateLock) {
+			Room room = getRoom(roomName);
+			return room.getDate().equals(clientLastUpdateTime);
+		}
+	}
+
+	public void  updateGraphicsTime(String roomName)
+	{
+		synchronized (whiteBoardUpdateLock) {
+			Room room = getRoom(roomName);
+			room.doUpdate();
+		}
+	}
+	public Date getWhiteBoardUpdateTimeOfRoom(String roomName)
+	{
+		return getRoom(roomName).getDate();
+	}
+
+	public ArrayList<Shape> getAllShapesOfRoom(String roomName)
+	{
+		Room room = this.getRoom(roomName);
+		return room.getShapes();
+	}
 }
