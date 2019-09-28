@@ -102,6 +102,7 @@ public void initialize() {
     }
     void drawRectangle(Point p1,int width,int height)
     {
+        graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeRect(p1.getX(),p1.getY(),width,height);
     }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
@@ -171,13 +172,7 @@ public void initialize() {
             State.mainController = loader.getController();
 
             Lobby lobby = new Lobby();
-            Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    Platform.runLater(lobby);
-                }
-            }));
+            Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
             lobby.setTimerUpdateList(roomListTimer);
             roomListTimer.setCycleCount(Timeline.INDEFINITE);
             roomListTimer.play();

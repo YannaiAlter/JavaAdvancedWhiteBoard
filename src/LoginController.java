@@ -74,7 +74,7 @@ public class LoginController {
                     State.username=username.getText();
                 //    ((LobbyController)State.mainController).setUsername(username.getText());
                     Lobby lobby = new Lobby();
-                    Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(lobby)));
+                    Timeline roomListTimer = new Timeline(new KeyFrame(Duration.seconds(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
                     lobby.setTimerUpdateList(roomListTimer);
                     roomListTimer.setCycleCount(Timeline.INDEFINITE);
                     roomListTimer.play();

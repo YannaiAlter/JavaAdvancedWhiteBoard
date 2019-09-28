@@ -62,7 +62,7 @@ public class LobbyController {
             chat.setTimerUpdateList(oneSecondTimerUpdateList);
 
             GraphicsIntervalRunner graphics = new GraphicsIntervalRunner();
-            Timeline updateGraphicsTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> Platform.runLater(graphics)));
+            Timeline updateGraphicsTimer = new Timeline(new KeyFrame(Duration.seconds(DBFinals.WHITEBOARD_UPDATES_INTERVAL_TIME), event -> Platform.runLater(graphics)));
             updateGraphicsTimer.setCycleCount(Timeline.INDEFINITE);
             updateGraphicsTimer.play();
             graphics.setTimerUpdateList(oneSecondTimerUpdateList);
