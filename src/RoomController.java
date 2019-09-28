@@ -78,13 +78,23 @@ public void initialize() {
                     }
                     else if(State.drawState == Shape.Type.RECTANGLE)
                     {
-                        System.out.println("draw");
                         Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
                         drawRectangle(clickedPoint,50,50);
                         try {
                             State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint));
                             State.roomManager.updateGraphicsTime(State.roomName);
                         } catch (Exception e) { e.printStackTrace(); }
+
+                    }
+                    else if(State.drawState == Shape.Type.CIRCLE)
+                    {
+                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                        try{
+                            drawCircle(clickedPoint,50,50);
+                            State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50));
+                            State.roomManager.updateGraphicsTime(State.roomName);
+                        } catch (Exception e) { e.printStackTrace(); }
+
 
                     }
                 }
@@ -106,6 +116,11 @@ public void initialize() {
     {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeRect(p1.getX(),p1.getY(),width,height);
+    }
+    void drawCircle(Point p1,int radiusX,int radiusY)
+    {
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.strokeOval(p1.getX(),p1.getY(),radiusX,radiusY);
     }
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
@@ -136,11 +151,11 @@ public void initialize() {
                 0,              //y of the upper left corner
                 canvasWidth,    //width of the rectangle
                 canvasHeight);  //height of the rectangle
-
+/*
         graphicsContext.setFill(Color.RED);
         graphicsContext.setStroke(Color.BLUE);
         graphicsContext.setLineWidth(1);
-
+*/
     }
 
     public void onCircleClick()

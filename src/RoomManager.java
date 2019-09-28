@@ -35,7 +35,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 
 	}
-	
+
 	public static RoomInterface getRoomManager() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
