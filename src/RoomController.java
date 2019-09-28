@@ -44,6 +44,8 @@ public class RoomController {
     Label circleLabel;
     @FXML
     Label rectangleLabel;
+    @FXML
+    Label lineLabel;
 
     private GraphicsContext graphicsContext;
 
@@ -157,6 +159,14 @@ public void initialize() {
         State.currentToolBoxItemClicked = this.rectangleLabel;
         rectangleLabel.setStyle(blueBorder);
     }
+    public void onLineClick()
+    {
+        String blueBorder = this.lineLabel.getStyle() + "-fx-border-color: blue;";
+        State.drawState = Shape.Type.LINE;
+        if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
+        State.currentToolBoxItemClicked = this.lineLabel;
+        lineLabel.setStyle(blueBorder);
+    }
     public void logoutClicked(MouseEvent actionEvent)
     {
         try {
@@ -183,7 +193,6 @@ public void initialize() {
     public void enterClick() {
     appendChat(inputChat.getText());
     inputChat.setText(null);
-    System.out.println("appended");
     }
 
     public void onUndoClicked(MouseEvent event)

@@ -92,7 +92,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label id="pencil" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="line" fx:id="lineLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onLineClick" prefHeight="25.0" prefWidth="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -100,7 +100,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="rectangle" fx:id="rectangleLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onRectangleClick" prefHeight="30.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="rectangle" fx:id="rectangleLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onRectangleClick" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
