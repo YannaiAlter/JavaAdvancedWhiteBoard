@@ -58,13 +58,13 @@ public class RoomController {
     Label pencilLabel;
 
     private GraphicsContext graphicsContext;
-
+    ContinuousLine cl;
 
     @FXML
 public void initialize() {
             graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
             initDraw();
-            ContinuousLine cl = new ContinuousLine();
+            cl = new ContinuousLine();
             canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
                     event -> {
                         if (State.drawState == Shape.Type.LINE) {
@@ -122,65 +122,47 @@ public void initialize() {
                         }
                         else if(State.drawState == Shape.Type.CONTINUOUS_LINE)
                         {
-                            graphicsContext.setLineWidth(2);
-                            graphicsContext.beginPath();
-                            graphicsContext.moveTo(event.getX(), event.getY());
-                            graphicsContext.stroke();
-                            cl.addPoint(new Point((int)event.getX(),(int)event.getY()));
-
+                            drawContinuousLineFirstClick((int)event.getX(),(int)event.getY());
                         }
                     });
 
             canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                     event -> {
                     if(State.drawState == Shape.Type.CONTINUOUS_LINE) {
-                            graphicsContext.lineTo(event.getX(), event.getY());
-                            graphicsContext.stroke();
-                            cl.addPoint(new Point((int) event.getX(), (int) event.getY()));
-
-
+                          drawContinuousLineOnDrag((int)event.getX(),(int)event.getY());
                     }
                     });
 
         canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_RELEASED,
                 event -> {
-                    try {
-
-
-                        if (State.drawState == Shape.Type.CONTINUOUS_LINE) {
-                            State.roomManager.addShapeToRoom(State.roomName, cl);
-                            State.roomManager.updateGraphicsTime(State.roomName);
-                            cl.clear();
-                        }
-                    }
-                    catch (Exception e) { e.printStackTrace(); }
+                    drawContinuousLineOnMouseRelease();
                 });
 
 
 }
 
-    public void clearWhiteBoard()
+    synchronized public void clearWhiteBoard() //Synchronizing with the timer
     {
         graphicsContext.clearRect(0, 0, canvasWhiteBoard.getWidth(), canvasWhiteBoard.getHeight());
     }
-    void drawLine(Point p1, Point p2)
+    synchronized void  drawLine(Point p1, Point p2)
     {
         initDraw();
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(3);
         graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
     }
-    void drawRectangle(Point p1,int width,int height)
+    synchronized void drawRectangle(Point p1,int width,int height)
     {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeRect(p1.getX(),p1.getY(),width,height);
     }
-    void drawCircle(Point p1,int radiusX,int radiusY)
+    synchronized void drawCircle(Point p1,int radiusX,int radiusY)
     {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeOval(p1.getX(),p1.getY(),radiusX,radiusY);
     }
-    void drawContinuousLine(ArrayList<Point> points)
+    synchronized void drawContinuousLine(ArrayList<Point> points)
     {
         int first_x = (int) points.get(0).getX();
         int first_y = (int) points.get(0).getY();
@@ -197,7 +179,32 @@ public void initialize() {
             graphicsContext.stroke();
         }
     }
-    void drawText(String text, Point p1)
+    synchronized void drawContinuousLineOnDrag(int x,int y)
+    {
+        graphicsContext.lineTo(x, y);
+        graphicsContext.stroke();
+        cl.addPoint(new Point(x,y));
+    }
+    synchronized private void drawContinuousLineFirstClick(int x,int y)
+    {
+        graphicsContext.setLineWidth(2);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(x, y);
+        graphicsContext.stroke();
+        cl.addPoint(new Point(x,y));
+    }
+    synchronized private void drawContinuousLineOnMouseRelease()
+    {
+        try {
+            if (State.drawState == Shape.Type.CONTINUOUS_LINE) {
+                State.roomManager.addShapeToRoom(State.roomName, cl);
+                State.roomManager.updateGraphicsTime(State.roomName);
+                cl.clear();
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }
+    synchronized void drawText(String text, Point p1)
     {
         graphicsContext.setFont(new Font("Arial", 20));
         graphicsContext.setFill(Color.BLACK);
@@ -206,7 +213,7 @@ public void initialize() {
 /* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
    This will allow clients on network to see the update and update their own UI.
  */
-    void appendChat(String newMessage) {
+    synchronized void appendChat(String newMessage) {
         try {
            State.roomManager.setRoomConversation(State.roomManager.getClientRoom(State.username), "["+State.username +"]: " +newMessage +"\r\n");
         }
@@ -218,13 +225,13 @@ public void initialize() {
     /*Credit:
     http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
      */
-    public void initDraw(){
+    public synchronized void initDraw(){
         double canvasWidth = graphicsContext.getCanvas().getWidth();
         double canvasHeight = graphicsContext.getCanvas().getHeight();
 
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
-        graphicsContext.setFill(Color.LIGHTGRAY);
+        graphicsContext.setFill(Color.TRANSPARENT);
         graphicsContext.strokeRect(
                 0,              //x of the upper left corner
                 0,              //y of the upper left corner
