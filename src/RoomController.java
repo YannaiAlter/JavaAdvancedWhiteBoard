@@ -122,6 +122,7 @@ public void initialize() {
                         }
                         else if(State.drawState == Shape.Type.CONTINUOUS_LINE)
                         {
+                            graphicsContext.setLineWidth(2);
                             graphicsContext.beginPath();
                             graphicsContext.moveTo(event.getX(), event.getY());
                             graphicsContext.stroke();
@@ -166,7 +167,7 @@ public void initialize() {
     {
         initDraw();
         graphicsContext.setStroke(Color.BLACK);
-        graphicsContext.setLineWidth(5);
+        graphicsContext.setLineWidth(3);
         graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
     }
     void drawRectangle(Point p1,int width,int height)
@@ -183,6 +184,7 @@ public void initialize() {
     {
         int first_x = (int) points.get(0).getX();
         int first_y = (int) points.get(0).getY();
+        graphicsContext.setLineWidth(2);
         graphicsContext.beginPath();
         graphicsContext.moveTo(first_x, first_y);
         graphicsContext.stroke();
@@ -222,7 +224,7 @@ public void initialize() {
 
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
-
+        graphicsContext.setFill(Color.LIGHTGRAY);
         graphicsContext.strokeRect(
                 0,              //x of the upper left corner
                 0,              //y of the upper left corner
