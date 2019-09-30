@@ -78,6 +78,7 @@ public class LoginController {
                     lobby.setTimerUpdateList(roomListTimer);
                     roomListTimer.setCycleCount(Timeline.INDEFINITE);
                     roomListTimer.play();
+
                     break;
                 case 1:
                     status.setText("Unidentified username.");

@@ -1,4 +1,6 @@
+import com.sun.glass.ui.Application;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -42,8 +44,12 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 			RoomInterface rooms = (RoomInterface) registry.lookup("RoomManager");
 			return rooms;
 		} catch (Exception e) {
-			System.err.println("Client exception: " + e.toString());
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setHeaderText("RMI Connection Failed");
+			errorAlert.setContentText("Please check that RMI Server is available");
+			errorAlert.showAndWait();
 			e.printStackTrace();
+			System.exit(0);
 		}
 		return null;
 	}

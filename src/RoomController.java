@@ -187,6 +187,7 @@ public void initialize() {
     }
     synchronized private void drawContinuousLineFirstClick(int x,int y)
     {
+        State.graphicsUpdateTimer.stop();
         graphicsContext.setLineWidth(2);
         graphicsContext.beginPath();
         graphicsContext.moveTo(x, y);
@@ -195,6 +196,7 @@ public void initialize() {
     }
     synchronized private void drawContinuousLineOnMouseRelease()
     {
+        State.graphicsUpdateTimer.play();
         try {
             if (State.drawState == Shape.Type.CONTINUOUS_LINE) {
                 State.roomManager.addShapeToRoom(State.roomName, cl);
