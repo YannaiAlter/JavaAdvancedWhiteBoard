@@ -9,7 +9,7 @@ RoomInterface is the interface of RoomManager and order to pass those functions 
 public interface RoomInterface extends Remote {
 
     //This function adds a new room to the room list in RMI
-    void addRoom(String roomName) throws RemoteException;
+    boolean addRoom(String roomName) throws RemoteException;
 
     //Useful in lobby - returns a String list of all room names.
     ArrayList<String> getRoomsAsString() throws RemoteException;

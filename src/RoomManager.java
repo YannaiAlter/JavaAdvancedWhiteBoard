@@ -72,10 +72,12 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		return list;
 	}
 
-	public void addRoom(String roomName)  {
-
+	public synchronized boolean addRoom(String roomName)  {
+		Room r = getRoom(roomName); //check if room is already exists
+		if(r != null) return false;
 		Room newRoom = new Room(roomName);
 		room.add(newRoom);
+		return true;
 	}
 	public void setRoomConversation(String roomName,String text) {
 		synchronized (chatLock) {

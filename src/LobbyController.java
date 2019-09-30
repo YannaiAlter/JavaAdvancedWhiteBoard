@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import java.util.*;
@@ -93,10 +94,17 @@ public class LobbyController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             System.out.println("Room's name: " + result.get());
-            addToRoomList(result.get()); // adding to gui
            try {
-               State.roomManager.addRoom(result.get()); // adding to rmi server
-
+              boolean roomExists = State.roomManager.addRoom(result.get()); // adding to rmi server
+               if(!roomExists)
+               {
+                   Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                   errorAlert.setHeaderText("Room Already Exists");
+                   errorAlert.setContentText("You can't choose a room name that is already exists");
+                   errorAlert.showAndWait();
+               }
+               else 
+               addToRoomList(result.get()); // adding to gui
            }
            catch (Exception e)
            {
