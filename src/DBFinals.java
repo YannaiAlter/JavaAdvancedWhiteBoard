@@ -25,14 +25,23 @@ public class DBFinals {
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader(filePath))
+        try
         {
+            FileReader reader = new FileReader(filePath);
             //Read JSON file
             Object obj = jsonParser.parse(reader);
 
             JSONObject configJson = (JSONObject) obj;
             Map sqlConfig = ((Map)configJson.get("mysql"));
+            url = (String)sqlConfig.get("url");
             user = (String)sqlConfig.get("user");
+            password = (String)sqlConfig.get("password");
+            Map rmiConfig = ((Map)configJson.get("rmi"));
+            RMIHost = (String)rmiConfig.get("RMIHost");
+            RMIPort =  ((Long) rmiConfig.get("RMIPort")).intValue();
+            WHITEBOARD_UPDATES_INTERVAL_TIME = ((Long) rmiConfig.get("WHITEBOARD_UPDATES_INTERVAL_TIME")).intValue();
+            ROOMLIST_UPDATES_INTERVAL_TIME = ((Long) rmiConfig.get("ROOMLIST_UPDATES_INTERVAL_TIME")).intValue();
+            CHAT_UPDATE_INTERVAL_TIME = ((Long) rmiConfig.get("CHAT_UPDATE_INTERVAL_TIME")).intValue();
             return true;
         } catch (FileNotFoundException e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
