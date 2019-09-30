@@ -7,18 +7,46 @@ import java.rmi.RemoteException;
 RoomInterface is the interface of RoomManager and order to pass those functions on RMI.
  */
 public interface RoomInterface extends Remote {
+
+    //This function adds a new room to the room list in RMI
     void addRoom(String roomName) throws RemoteException;
+
+    //Useful in lobby - returns a String list of all room names.
     ArrayList<String> getRoomsAsString() throws RemoteException;
+
+    //This function gets roomName and text and appending it to the chat of the room.
     void setRoomConversation(String roomName,String text) throws RemoteException;
+
+    //Returns true if chat is updated to the latest version
     boolean isChatUpdated(String roomName,String clientChat) throws  RemoteException;
+
+    //Returns the chat of roomName to the client
     Chat getChatOfRoom(String roomName) throws RemoteException;
-    void setClientRoom(String username, String roomname) throws RemoteException;
+
+    //Updates that a client has joined roomName by using the hash-map
+    void setClientRoom(String username, String roomName) throws RemoteException;
+
+    //This function gets roomName and a Shape and adds it to the stack of all shapes in RMI.
     void addShapeToRoom(String roomName, Shape shape) throws  RemoteException;
+
+    //This function is useful when the client has drawn something, then the clients update the date of the last update in the rmi side.
     void updateGraphicsTime(String roomName) throws  RemoteException;
+
+    //This function returns true if a client needs an update, called from the interval
     boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) throws RemoteException;
+
+    //This function gets username of a client and returns the Room he is at
     String getClientRoom(String username) throws RemoteException;
+
+    //Returns the time of the newest update, this is useful in case a client needs update, to mark that he did the update.
     Date getWhiteBoardUpdateTimeOfRoom(String roomName) throws RemoteException;
+
+    //Returns an ArrayList contains all the shapes in a room
     ArrayList<Shape> getAllShapesOfRoom(String roomName) throws RemoteException;
+
+    //Deletes last shape from shapes' stack
     void undoShapeOfRoom(String roomName) throws RemoteException;
+
+    //Returns last shape deleted to shapes' stack
     void redoShapeOfRoom(String roomName) throws RemoteException;
 }

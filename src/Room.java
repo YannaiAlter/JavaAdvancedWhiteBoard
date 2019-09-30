@@ -1,8 +1,4 @@
-import javafx.scene.canvas.Canvas;
-
-import java.awt.*;
 import java.io.Serializable;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
