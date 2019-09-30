@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServerController">
+   <top>
+      <Label fx:id="status" text="Server Status: Not Working" textFill="RED" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <TextField fx:id="configPath" prefHeight="27.0" prefWidth="185.0" promptText="default" text="default" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
+      </TextField>
+   </left>
+   <right>
+      <Button fx:id="createServer" mnemonicParsing="false" onAction="#createServerClicked" prefHeight="27.0" prefWidth="119.0" text="Create Server" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </right>
+   <bottom>
+      <Button fx:id="browse" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#browseClick" text="Browse" textAlignment="RIGHT" BorderPane.alignment="CENTER_RIGHT">
+         <BorderPane.margin>
+            <Insets bottom="10.0" right="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>
