@@ -135,7 +135,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="pencil" prefHeight="30.0" prefWidth="30.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="pencil" fx:id="pencilLabel" onMouseClicked="#onPencilClick" prefHeight="30.0" prefWidth="30.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>

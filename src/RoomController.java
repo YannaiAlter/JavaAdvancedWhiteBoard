@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -35,8 +36,8 @@ public class RoomController {
     TextArea outputChat;
     @FXML
     TextField inputChat;
-    @FXML
-    BorderPane WhiteBoard;
+    //@FXML
+    //BorderPane WhiteBoard;
     @FXML
     Canvas canvasWhiteBoard;
     @FXML
@@ -53,6 +54,8 @@ public class RoomController {
     Label textLabel;
     @FXML
     Label redoLabel;
+    @FXML
+    Label pencilLabel;
 
     private GraphicsContext graphicsContext;
 
@@ -61,68 +64,97 @@ public class RoomController {
 public void initialize() {
             graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
             initDraw();
+            ContinuousLine cl = new ContinuousLine();
             canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
-            new EventHandler<MouseEvent>(){
-                @Override
-                public void handle(MouseEvent event) {
-                    if (State.drawState == Shape.Type.LINE) {
-                        State.drawState = Shape.Type.LINE_SECOND_CLICK;
-                        State.lastClick = new Point((int) event.getX(), (int) event.getY());
+                    event -> {
+                        if (State.drawState == Shape.Type.LINE) {
+                            State.drawState = Shape.Type.LINE_SECOND_CLICK;
+                            State.lastClick = new Point((int) event.getX(), (int) event.getY());
 
-                    } else if (State.drawState == Shape.Type.LINE_SECOND_CLICK) {
-                        Point firstClick = State.lastClick;
-                        Point secondClick = new Point((int)event.getX(),(int)event.getY());
-                        drawLine(firstClick,secondClick);
-                        State.drawState = Shape.Type.LINE;
-                        try {
-                            State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY())));
-                            State.roomManager.updateGraphicsTime(State.roomName);
+                        } else if (State.drawState == Shape.Type.LINE_SECOND_CLICK) {
+                            Point firstClick = State.lastClick;
+                            Point secondClick = new Point((int)event.getX(),(int)event.getY());
+                            drawLine(firstClick,secondClick);
+                            State.drawState = Shape.Type.LINE;
+                            try {
+                                State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY())));
+                                State.roomManager.updateGraphicsTime(State.roomName);
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
-                        catch (Exception e)
+                        else if(State.drawState == Shape.Type.RECTANGLE)
+                        {
+                            Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                            drawRectangle(clickedPoint,50,50);
+                            try {
+                                State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint));
+                                State.roomManager.updateGraphicsTime(State.roomName);
+                            } catch (Exception e) { e.printStackTrace(); }
+
+                        }
+                        else if(State.drawState == Shape.Type.CIRCLE)
+                        {
+                            Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                            try{
+                                drawCircle(clickedPoint,50,50);
+                                State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50));
+                                State.roomManager.updateGraphicsTime(State.roomName);
+                            } catch (Exception e) { e.printStackTrace(); }
+                        }
+                        else if(State.drawState == Shape.Type.TEXT)
+                        {
+                            Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
+                            TextInputDialog dialog = new TextInputDialog("walter");
+                            dialog.setTitle("Room's Name");
+                            dialog.setContentText("Please enter text:");
+
+                            Optional<String> result = dialog.showAndWait();
+                            if (!result.isPresent()) return;
+
+                            drawText(result.get(),clickedPoint);
+                            try {
+                                State.roomManager.addShapeToRoom(State.roomName, new Text(result.get(), clickedPoint));
+                                State.roomManager.updateGraphicsTime(State.roomName);
+                            } catch (Exception e) { e.printStackTrace(); }
+                        }
+                        else if(State.drawState == Shape.Type.CONTINUOUS_LINE)
+                        {
+                            graphicsContext.beginPath();
+                            graphicsContext.moveTo(event.getX(), event.getY());
+                            graphicsContext.stroke();
+                            cl.addPoint(new Point((int)event.getX(),(int)event.getY()));
+
+                        }
+                    });
+
+            canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+                    event -> {
+                    if(State.drawState == Shape.Type.CONTINUOUS_LINE) {
+                        try {
+                            graphicsContext.lineTo(event.getX(), event.getY());
+                            graphicsContext.stroke();
+                            cl.addPoint(new Point((int) event.getX(), (int) event.getY()));
+                            State.roomManager.addShapeToRoom(State.roomName, cl);
+                            State.roomManager.updateGraphicsTime(State.roomName);
+
+                        }catch (Exception e)
                         {
                             e.printStackTrace();
                         }
                     }
-                    else if(State.drawState == Shape.Type.RECTANGLE)
-                    {
-                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
-                        drawRectangle(clickedPoint,50,50);
-                        try {
-                            State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint));
-                            State.roomManager.updateGraphicsTime(State.roomName);
-                        } catch (Exception e) { e.printStackTrace(); }
+                    });
 
+        canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_RELEASED,
+                event -> {
+                    if(State.drawState == Shape.Type.CONTINUOUS_LINE) {
+                    cl.clear();
                     }
-                    else if(State.drawState == Shape.Type.CIRCLE)
-                    {
-                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
-                        try{
-                            drawCircle(clickedPoint,50,50);
-                            State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50));
-                            State.roomManager.updateGraphicsTime(State.roomName);
-                        } catch (Exception e) { e.printStackTrace(); }
-                    }
-                    else if(State.drawState == Shape.Type.TEXT)
-                    {
-                        Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
-                        TextInputDialog dialog = new TextInputDialog("walter");
-                        dialog.setTitle("Room's Name");
-                        dialog.setContentText("Please enter text:");
-
-                        Optional<String> result = dialog.showAndWait();
-                        if (!result.isPresent()) return;
-
-                        drawText(result.get(),clickedPoint);
-                        try {
-                            State.roomManager.addShapeToRoom(State.roomName, new Text(result.get(), clickedPoint));
-                            State.roomManager.updateGraphicsTime(State.roomName);
-                        } catch (Exception e) { e.printStackTrace(); }
+                });
 
 
-
-                    }
-                }
-            });
 }
 
     public void clearWhiteBoard()
@@ -145,6 +177,22 @@ public void initialize() {
     {
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.strokeOval(p1.getX(),p1.getY(),radiusX,radiusY);
+    }
+    void drawContinuousLine(ArrayList<Point> points)
+    {
+        int first_x = (int) points.get(0).getX();
+        int first_y = (int) points.get(0).getY();
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(first_x, first_y);
+        graphicsContext.stroke();
+
+        for(int i=1; i<points.size()-1; i++)
+        {
+            int x = (int) points.get(i).getX();
+            int y = (int) points.get(i).getY();
+            graphicsContext.lineTo(x, y);
+            graphicsContext.stroke();
+        }
     }
     void drawText(String text, Point p1)
     {
@@ -171,11 +219,9 @@ public void initialize() {
         double canvasWidth = graphicsContext.getCanvas().getWidth();
         double canvasHeight = graphicsContext.getCanvas().getHeight();
 
-        graphicsContext.setFill(Color.LIGHTGRAY);
         graphicsContext.setStroke(Color.BLACK);
         graphicsContext.setLineWidth(5);
 
-        graphicsContext.fill();
         graphicsContext.strokeRect(
                 0,              //x of the upper left corner
                 0,              //y of the upper left corner
@@ -211,6 +257,14 @@ public void initialize() {
         if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
         State.currentToolBoxItemClicked = this.rectangleLabel;
         rectangleLabel.setStyle(blueBorder);
+    }
+    public void onPencilClick()
+    {
+        String blueBorder = pencilLabel.getStyle() + "-fx-border-color: blue;";
+        State.drawState = Shape.Type.CONTINUOUS_LINE;
+        if(State.currentToolBoxItemClicked != null) State.currentToolBoxItemClicked.setStyle(null);
+        State.currentToolBoxItemClicked = this.pencilLabel;
+        pencilLabel.setStyle(blueBorder);
     }
     public void onLineClick()
     {
@@ -263,4 +317,5 @@ public void initialize() {
         }
         catch (Exception e) { e.printStackTrace(); }
     }
+
 }
