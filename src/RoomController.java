@@ -133,25 +133,26 @@ public void initialize() {
             canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                     event -> {
                     if(State.drawState == Shape.Type.CONTINUOUS_LINE) {
-                        try {
                             graphicsContext.lineTo(event.getX(), event.getY());
                             graphicsContext.stroke();
                             cl.addPoint(new Point((int) event.getX(), (int) event.getY()));
-                            State.roomManager.addShapeToRoom(State.roomName, cl);
-                            State.roomManager.updateGraphicsTime(State.roomName);
 
-                        }catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
+
                     }
                     });
 
         canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_RELEASED,
                 event -> {
-                    if(State.drawState == Shape.Type.CONTINUOUS_LINE) {
-                    cl.clear();
+                    try {
+
+
+                        if (State.drawState == Shape.Type.CONTINUOUS_LINE) {
+                            State.roomManager.addShapeToRoom(State.roomName, cl);
+                            State.roomManager.updateGraphicsTime(State.roomName);
+                            cl.clear();
+                        }
                     }
+                    catch (Exception e) { e.printStackTrace(); }
                 });
 
 
