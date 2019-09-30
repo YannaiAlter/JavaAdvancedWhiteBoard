@@ -103,12 +103,12 @@ public class LobbyController {
                    errorAlert.setContentText("You can't choose a room name that is already exists");
                    errorAlert.showAndWait();
                }
-               else 
+               else
                addToRoomList(result.get()); // adding to gui
            }
            catch (Exception e)
            {
-               System.out.println("Can't add room - rmi error");
+                e.printStackTrace();
            }
         }
 
