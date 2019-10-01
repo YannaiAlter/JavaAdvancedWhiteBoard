@@ -130,6 +130,9 @@ public class LobbyController {
         }
     }
     public void logOut(){
-        JDBCManager.LogInOutUser(State.username,false);
+        try {
+            State.jdbcManager.LogInOutUser(State.username, false);
+        }
+        catch (Exception e) { e.printStackTrace(); }
     }
 }

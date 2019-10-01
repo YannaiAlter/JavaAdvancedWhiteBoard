@@ -34,7 +34,7 @@ public class LoginController {
                 status.setVisible(true);
                 return;
             }
-            if (JDBCManager.createUser(username.getText(), password.getText())) {
+            if (State.jdbcManager.createUser(username.getText(), password.getText())) {
                 status.setText("Account created successfully");
                 status.setVisible(true);
 
@@ -56,13 +56,13 @@ public class LoginController {
                 status.setVisible(true);
                 return;
             }
-            int state=JDBCManager.checkLogin(username.getText(), password.getText());
+            int state=State.jdbcManager.checkLogin(username.getText(), password.getText());
             //0 fine, 1 username not exists, 2 wrong password, 3 user already logged in
 
             switch (state) {
                 case 0:
                     status.setText("Success");
-                    JDBCManager.LogInOutUser(username.getText(),true);
+                    State.jdbcManager.LogInOutUser(username.getText(),true);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
                     Parent lobbyParent = loader.load();
                     Scene lobbyScene = new Scene(lobbyParent);

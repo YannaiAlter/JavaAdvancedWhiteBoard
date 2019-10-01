@@ -12,6 +12,7 @@ public class State {
     static Timeline graphicsUpdateTimer;
     static Object mainController;
     static RoomInterface roomManager = RoomManager.getRoomManager();
+    static SQLInterface jdbcManager = JDBCManager.getJDBCManager();
     static boolean isLoggedIn;
     static Point lastClick;
     static Date lastTimeUpdatedGraphics;

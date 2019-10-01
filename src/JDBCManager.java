@@ -1,6 +1,12 @@
+import javafx.scene.control.Alert;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
-public class JDBCManager {
+public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
     public static void main(String args[]) {
         try {
             Connection connection = null; // manages connection
@@ -20,8 +26,29 @@ public class JDBCManager {
         }
     }
 
-    public static boolean createUser(String username, String password)
-            throws Exception
+    public JDBCManager() throws RemoteException
+    {
+        Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
+        registry.rebind("JDBCManager", this);
+        System.out.println("Created JDBCManager");
+    }
+    public static SQLInterface getJDBCManager() {
+        try {
+            Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
+            SQLInterface rooms = (SQLInterface) registry.lookup("JDBCManager");
+            return rooms;
+        } catch (Exception e) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("RMI Connection Failed");
+            errorAlert.setContentText("Please check that RMI Server is available");
+            errorAlert.showAndWait();
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return null;
+    }
+
+    public boolean createUser(String username, String password)
     {
         Connection connection = null; // manages connection
         PreparedStatement pt = null; // manages prepared statement
@@ -53,14 +80,14 @@ public class JDBCManager {
 
         }//end try
         catch (Exception e) {
-            throw e;
+             e.printStackTrace();
         }
 
         return true;
     }
 
-    public static int checkLogin(String username, String password)
-            throws Exception{
+    public int checkLogin(String username, String password)
+    {
         Connection connection = null; // manages connection
         PreparedStatement pt = null; // manages prepared statement
 
@@ -93,10 +120,11 @@ public class JDBCManager {
                 return 2;
         }//end try
         catch (Exception e) {
-            throw e;
+             e.printStackTrace();
         } //end catch
+        return -1;
     }
-    public static void LogInOutUser(String username,boolean in){
+    public void LogInOutUser(String username,boolean in){
         Connection connection = null; // manages connection
         PreparedStatement pt = null; // manages prepared statement
 

@@ -30,7 +30,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 			System.setProperty("java.rmi.server.hostname", DBFinals.RMIHost);
 			registry = LocateRegistry.createRegistry(DBFinals.RMIPort);
 			registry.rebind("RoomManager", this);
-			System.out.println("Created");
+			System.out.println("Created RoomManager");
 		} catch (Exception x) {
 			System.err.println("Error" + x);
 

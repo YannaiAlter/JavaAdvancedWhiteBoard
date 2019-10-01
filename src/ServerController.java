@@ -23,7 +23,8 @@ public void createServerClicked()
         status.setText("Server Status: Running");
         try {
             RoomManager room = new RoomManager();
-            RoomManager.getRoomManager();
+            JDBCManager jdbcManager = new JDBCManager();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
