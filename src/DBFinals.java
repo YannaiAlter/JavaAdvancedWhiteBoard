@@ -59,7 +59,6 @@ public class DBFinals {
 			errorAlert.setContentText("Please check configuration file is in the right syntax");
 			errorAlert.showAndWait();
 			e.printStackTrace();
-			System.exit(0);
 			return false;
 		}
 	}

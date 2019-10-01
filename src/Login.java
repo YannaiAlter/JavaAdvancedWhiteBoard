@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 public class Login extends Application {
 
 	public static void main(String[] args) {
-
 		launch(args);
+
 	}
 
 	@Override
@@ -29,6 +29,7 @@ public class Login extends Application {
 				stage.setTitle("Login");
 				stage.setScene(scene);
 				stage.show();
+				DBFinals.updateConfigurationFromFile("/etc/whiteBoard/config.json");
 			}catch(Exception e){
 				e.printStackTrace();
 			}

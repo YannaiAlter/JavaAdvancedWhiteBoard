@@ -43,6 +43,6 @@ public class Lobby implements Runnable {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		};
+		}
 	}
 }
