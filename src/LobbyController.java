@@ -39,6 +39,7 @@ public class LobbyController {
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomDesign.fxml"));
+			if(roomList.getSelectionModel().isEmpty()) return;
 			String clickedRoomName = (String)roomList.getSelectionModel().getSelectedItem();
 			Parent lobbyParent = loader.load();
 			Scene lobbyScene = new Scene(lobbyParent);
