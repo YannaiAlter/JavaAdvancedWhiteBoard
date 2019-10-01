@@ -10,91 +10,91 @@ import javafx.animation.*;
 import javafx.event.*;
 import javafx.util.*;
 /*
-The controller of the Login window, which provides functionality to the login window,
-which includes register and login button functionality.
-In case of correct login details this class will be used to switch the window to the lobby's window.
-*/
+   The controller of the Login window, which provides functionality to the login window,
+   which includes register and login button functionality.
+   In case of correct login details this class will be used to switch the window to the lobby's window.
+ */
 
 public class LoginController {
 
-    @FXML
-    TextField username;
+	@FXML
+		TextField username;
 
-    @FXML
-    PasswordField password;
+	@FXML
+		PasswordField password;
 
-    @FXML
-    Label status;
+	@FXML
+		Label status;
 
-    public void onRegisterClick(ActionEvent actionEvent)
-    {
-        try {
-            if (username.getText().isBlank() || password.getText().isBlank()) {
-                status.setText("You must fill both fields");
-                status.setVisible(true);
-                return;
-            }
-            if (State.jdbcManager.createUser(username.getText(), password.getText())) {
-                status.setText("Account created successfully");
-                status.setVisible(true);
+	public void onRegisterClick(ActionEvent actionEvent)
+	{
+		try {
+			if (username.getText().isBlank() || password.getText().isBlank()) {
+				status.setText("You must fill both fields");
+				status.setVisible(true);
+				return;
+			}
+			if (State.jdbcManager.createUser(username.getText(), password.getText())) {
+				status.setText("Account created successfully");
+				status.setVisible(true);
 
-            }
-            else {
-                status.setText("Username is already taken");
-                status.setVisible(true);
+			}
+			else {
+				status.setText("Username is already taken");
+				status.setVisible(true);
 
-            }
-        }
-        catch (Exception e) {
-            System.out.println("An error occurred when connecting to SQL Database");
-        }
-    }
-    public void onLoginMouse(ActionEvent actionEvent) {
-        try {
-            if(username.getText().isBlank() || password.getText().isBlank()){
-                status.setText("You must fill both fields");
-                status.setVisible(true);
-                return;
-            }
-            int state=State.jdbcManager.checkLogin(username.getText(), password.getText());
-            //0 fine, 1 username not exists, 2 wrong password, 3 user already logged in
+			}
+		}
+		catch (Exception e) {
+			System.out.println("An error occurred when connecting to SQL Database");
+		}
+	}
+	public void onLoginMouse(ActionEvent actionEvent) {
+		try {
+			if(username.getText().isBlank() || password.getText().isBlank()){
+				status.setText("You must fill both fields");
+				status.setVisible(true);
+				return;
+			}
+			int state=State.jdbcManager.checkLogin(username.getText(), password.getText());
+			//0 fine, 1 username not exists, 2 wrong password, 3 user already logged in
 
-            switch (state) {
-                case 0:
-                    status.setText("Success");
-                    State.jdbcManager.LogInOutUser(username.getText(),true);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
-                    Parent lobbyParent = loader.load();
-                    Scene lobbyScene = new Scene(lobbyParent);
-                    Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    mainStage.setScene(lobbyScene);
-                    mainStage.show();
-                    State.mainController = loader.getController();
+			switch (state) {
+				case 0:
+					status.setText("Success");
+					State.jdbcManager.LogInOutUser(username.getText(),true);
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
+					Parent lobbyParent = loader.load();
+					Scene lobbyScene = new Scene(lobbyParent);
+					Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+					mainStage.setScene(lobbyScene);
+					mainStage.show();
+					State.mainController = loader.getController();
 
-                    State.username=username.getText();
-                //    ((LobbyController)State.mainController).setUsername(username.getText());
-                    Lobby lobby = new Lobby();
-                    Timeline roomListTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
-                    lobby.setTimerUpdateList(roomListTimer);
-                    roomListTimer.setCycleCount(Timeline.INDEFINITE);
-                    roomListTimer.play();
+					State.username=username.getText();
+					//    ((LobbyController)State.mainController).setUsername(username.getText());
+					Lobby lobby = new Lobby();
+					Timeline roomListTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
+					lobby.setTimerUpdateList(roomListTimer);
+					roomListTimer.setCycleCount(Timeline.INDEFINITE);
+					roomListTimer.play();
 
-                    break;
-                case 1:
-                    status.setText("Unidentified username.");
-                    break;
-                case 2:
-                    status.setText("Wrong password.");
-                    break;
-                case 3:
-                    status.setText("User already logged in.");
-                    break;
-            }
-            status.setVisible(true);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("An error occurred when connecting to SQL Database");
-        }
-    }
+					break;
+				case 1:
+					status.setText("Unidentified username.");
+					break;
+				case 2:
+					status.setText("Wrong password.");
+					break;
+				case 3:
+					status.setText("User already logged in.");
+					break;
+			}
+			status.setVisible(true);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("An error occurred when connecting to SQL Database");
+		}
+	}
 }

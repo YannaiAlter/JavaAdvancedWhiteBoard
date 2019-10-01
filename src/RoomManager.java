@@ -10,8 +10,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.HashMap;
 /*
-RoomManager Class is a class which his instance is created only one time and passed by the RMI to all clients.
-This class contains a list of all of the rooms that are registered, and provides the data of the rooms - chat conversation, etc.
+   RoomManager Class is a class which his instance is created only one time and passed by the RMI to all clients.
+   This class contains a list of all of the rooms that are registered, and provides the data of the rooms - chat conversation, etc.
  */
 public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
@@ -66,13 +66,13 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	}
 
 	@Override
-	public ArrayList<String> getRoomsAsString() {
-		ArrayList<String> list = new ArrayList<String>();
-		for (Room x : room) {
-			list.add(x.getRoomName());
+		public ArrayList<String> getRoomsAsString() {
+			ArrayList<String> list = new ArrayList<String>();
+			for (Room x : room) {
+				list.add(x.getRoomName());
+			}
+			return list;
 		}
-		return list;
-	}
 
 	public synchronized boolean addRoom(String roomName)  {
 		Room r = getRoom(roomName); //check if room is already exists
@@ -97,11 +97,11 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		roomLocker.put(roomName,new Object());
 		Room x;
 		synchronized (roomLocker) {
-			 x = getRoom(roomName);
-			}
+			x = getRoom(roomName);
+		}
 		roomLocker.remove(roomName);
 		if(x != null)
-		return x.getChat().getChatConversation().equals(clientChat);
+			return x.getChat().getChatConversation().equals(clientChat);
 
 		return true;
 
@@ -119,7 +119,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 		roomLocker.remove(roomName);
 		if(chat != null)
-		return chat;
+			return chat;
 
 		return null;
 
@@ -158,7 +158,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		Room room;
 		roomLocker.put(roomName,new Object());
 		synchronized (roomLocker) {
-			 room = getRoom(roomName);
+			room = getRoom(roomName);
 		}
 		roomLocker.remove(roomName);
 		return room.getDate().equals(clientLastUpdateTime);

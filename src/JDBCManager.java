@@ -7,141 +7,141 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
 public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
-    public static void main(String args[]) {
-        try {
-            Connection connection = null; // manages connection
-            PreparedStatement pt = null; // manages prepared statement
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
-            pt = connection.prepareStatement("select username,password,loggedin from accounts for update");
-            ResultSet rs = pt.executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getString("username"));
-                System.out.println(rs.getString("password"));
-                System.out.println(rs.getString("loggedin"));
-            }
-        }
-        catch (Exception e) {
-            System.out.println("error");
-        }
-    }
+	public static void main(String args[]) {
+		try {
+			Connection connection = null; // manages connection
+			PreparedStatement pt = null; // manages prepared statement
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+			pt = connection.prepareStatement("select username,password,loggedin from accounts for update");
+			ResultSet rs = pt.executeQuery();
+			while (rs.next()) {
+				System.out.println(rs.getString("username"));
+				System.out.println(rs.getString("password"));
+				System.out.println(rs.getString("loggedin"));
+			}
+		}
+		catch (Exception e) {
+			System.out.println("error");
+		}
+	}
 
-    public JDBCManager() throws RemoteException
-    {
-        Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
-        registry.rebind("JDBCManager", this);
-        System.out.println("Created JDBCManager");
-    }
-    public static SQLInterface getJDBCManager() {
-        try {
-            Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
-            SQLInterface rooms = (SQLInterface) registry.lookup("JDBCManager");
-            return rooms;
-        } catch (Exception e) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("RMI Connection Failed");
-            errorAlert.setContentText("Please check that RMI Server is available");
-            errorAlert.showAndWait();
-            e.printStackTrace();
-            System.exit(0);
-        }
-        return null;
-    }
+	public JDBCManager() throws RemoteException
+	{
+		Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
+		registry.rebind("JDBCManager", this);
+		System.out.println("Created JDBCManager");
+	}
+	public static SQLInterface getJDBCManager() {
+		try {
+			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
+			SQLInterface rooms = (SQLInterface) registry.lookup("JDBCManager");
+			return rooms;
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setHeaderText("RMI Connection Failed");
+			errorAlert.setContentText("Please check that RMI Server is available");
+			errorAlert.showAndWait();
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return null;
+	}
 
-    public boolean createUser(String username, String password)
-    {
-        Connection connection = null; // manages connection
-        PreparedStatement pt = null; // manages prepared statement
+	public boolean createUser(String username, String password)
+	{
+		Connection connection = null; // manages connection
+		PreparedStatement pt = null; // manages prepared statement
 
-        // connect to database usernames and query database
-        try {
+		// connect to database usernames and query database
+		try {
 
-            // establish connection to database
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+			// establish connection to database
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-            pt = connection.prepareStatement("select username,password from accounts where username=? for update"); //select for update will lock database
+			pt = connection.prepareStatement("select username,password from accounts where username=? for update"); //select for update will lock database
 
-            // process query results
-            pt.setString(1, username);
-            ResultSet rs = pt.executeQuery();
-            if (rs.next()) //username already exists
-                return false;
+			// process query results
+			pt.setString(1, username);
+			ResultSet rs = pt.executeQuery();
+			if (rs.next()) //username already exists
+				return false;
 
 
-            // query database
-            pt = connection.prepareStatement("insert into accounts values(?,?,?);");
+			// query database
+			pt = connection.prepareStatement("insert into accounts values(?,?,?);");
 
-            // process query results
-            pt.setString(1, username);
-            pt.setString(2, password);
-            pt.setBoolean(3, false);
-            pt.executeUpdate();
+			// process query results
+			pt.setString(1, username);
+			pt.setString(2, password);
+			pt.setBoolean(3, false);
+			pt.executeUpdate();
 
-        }//end try
-        catch (Exception e) {
-             e.printStackTrace();
-        }
+		}//end try
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public int checkLogin(String username, String password)
-    {
-        Connection connection = null; // manages connection
-        PreparedStatement pt = null; // manages prepared statement
+	public int checkLogin(String username, String password)
+	{
+		Connection connection = null; // manages connection
+		PreparedStatement pt = null; // manages prepared statement
 
-        // connect to database usernames and query database
-        try {
+		// connect to database usernames and query database
+		try {
 
-            // establish connection to database
-            Class.forName("com.mysql.jdbc.Driver");
+			// establish connection to database
+			Class.forName("com.mysql.jdbc.Driver");
 
-            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-            // query database
-            pt = connection.prepareStatement("select username,password,loggedin from accounts where username=? for update");
+			// query database
+			pt = connection.prepareStatement("select username,password,loggedin from accounts where username=? for update");
 
-            // process query results
-            pt.setString(1, username);
-            ResultSet rs = pt.executeQuery();
+			// process query results
+			pt.setString(1, username);
+			ResultSet rs = pt.executeQuery();
 
-            if (!rs.next()) //username not exists
-                return 1;
-            if(rs.getBoolean("loggedin")==true)//username already logged in
-                return 3;
+			if (!rs.next()) //username not exists
+				return 1;
+			if(rs.getBoolean("loggedin")==true)//username already logged in
+				return 3;
 
-            if ( rs.getString("password").equals(password)) {
-                //do something
-                rs.close();
-                return 0;
-            }
-            else
-                return 2;
-        }//end try
-        catch (Exception e) {
-             e.printStackTrace();
-        } //end catch
-        return -1;
-    }
-    public void LogInOutUser(String username,boolean in){
-        Connection connection = null; // manages connection
-        PreparedStatement pt = null; // manages prepared statement
+			if ( rs.getString("password").equals(password)) {
+				//do something
+				rs.close();
+				return 0;
+			}
+			else
+				return 2;
+		}//end try
+		catch (Exception e) {
+			e.printStackTrace();
+		} //end catch
+		return -1;
+	}
+	public void LogInOutUser(String username,boolean in){
+		Connection connection = null; // manages connection
+		PreparedStatement pt = null; // manages prepared statement
 
-        // connect to database usernames and query database
-        try {
-            // establish connection to database
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+		// connect to database usernames and query database
+		try {
+			// establish connection to database
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-            pt = connection.prepareStatement("update accounts set loggedin=? where username=?");
+			pt = connection.prepareStatement("update accounts set loggedin=? where username=?");
 
-            pt.setBoolean(1,in);
-            pt.setString(2, username);
-            pt.executeUpdate();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			pt.setBoolean(1,in);
+			pt.setString(2, username);
+			pt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

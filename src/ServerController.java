@@ -8,35 +8,37 @@ import java.io.File;
 
 
 public class ServerController {
-    @FXML
-    TextField configPath;
-    @FXML
-    Label status;
-     public void initialize()
-     {
-         configPath.setText("default");
-     }
-public void createServerClicked()
-{
-    if(DBFinals.updateConfigurationFromFile(configPath.getText())) {
-        status.setTextFill(Color.GREEN);
-        status.setText("Server Status: Running");
-        try {
-            RoomManager room = new RoomManager();
-            JDBCManager jdbcManager = new JDBCManager();
+	@FXML
+		TextField configPath;
+	@FXML
+		Label status;
+	public void initialize()
+	{
+		configPath.setText("default");
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-}
-public void browseClick()
-{
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open Resource File");
-    File f = fileChooser.showOpenDialog(null);
-    configPath.setText(f.getAbsolutePath());
-}
+	public void createServerClicked()
+	{
+		if(DBFinals.updateConfigurationFromFile(configPath.getText())) {
+			status.setTextFill(Color.GREEN);
+			status.setText("Server Status: Running");
+			try {
+				RoomManager room = new RoomManager();
+				JDBCManager jdbcManager = new JDBCManager();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	public void browseClick()
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+		File f = fileChooser.showOpenDialog(null);
+		configPath.setText(f.getAbsolutePath());
+	}
 
 }
