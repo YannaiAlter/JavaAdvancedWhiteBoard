@@ -134,7 +134,9 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-			pt = connection.prepareStatement("update accounts set loggedin=? where username=?");
+			pt = connection.prepareStatement("update accounts set loggedin=? OUTPUT @@error as ErrorCode, DELETED.loggedin as DeletedName, INSERTED.loggedin as InsertedName\n where username=?");
+			//OUTPUT makes it atomic:
+			//https://www.codeproject.com/Tips/314241/SQL-Atomic-Operation-on-UPDATE-and-DELETE
 
 			pt.setBoolean(1,in);
 			pt.setString(2, username);
