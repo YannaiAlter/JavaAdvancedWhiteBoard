@@ -1,0 +1,16 @@
+{
+  "mysql": {
+  	"url":"jdbc:mysql://localhost/javaproject?useSSL=false",
+    "host": "192.168.1.17",
+    "user": "root",
+    "password": "yanayyanay"
+  },
+  "rmi":
+  {
+  "RMIHost": "192.168.1.17",
+  "RMIPort": 1099,
+  "WHITEBOARD_UPDATES_INTERVAL_TIME": 500,
+  "ROOMLIST_UPDATES_INTERVAL_TIME": 500,
+  "CHAT_UPDATE_INTERVAL_TIME": 500
+  }
+}
