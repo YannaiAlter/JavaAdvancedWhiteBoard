@@ -43,11 +43,9 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 			return rooms;
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-			errorAlert.setHeaderText("RMI Connection Failed");
-			errorAlert.setContentText("Please check that RMI Server is available");
+			errorAlert.setHeaderText("SQL Connection Failed");
+			errorAlert.setContentText("Please check that SQL Server is available");
 			errorAlert.showAndWait();
-			e.printStackTrace();
-			System.exit(0);
 		}
 		return null;
 	}

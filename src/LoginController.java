@@ -1,14 +1,18 @@
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.event.*;
 import javafx.util.*;
+
+import java.io.File;
 /*
    The controller of the Login window, which provides functionality to the login window,
    which includes register and login button functionality.
@@ -25,6 +29,16 @@ public class LoginController {
 
 	@FXML
 		Label status;
+
+	public void onConfigurationClick()
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+		File f = fileChooser.showOpenDialog(null);
+		DBFinals.updateConfigurationFromFile(f.getAbsolutePath());
+		State.loadJDBCManager();
+		State.loadRoomManager();
+	}
 
 	public void onRegisterClick(ActionEvent actionEvent)
 	{
@@ -46,7 +60,10 @@ public class LoginController {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setHeaderText("SQL Connection Failed");
+			errorAlert.setContentText("Please check that SQL Server is available and configured well");
+			errorAlert.showAndWait();
 		}
 	}
 	public void onLoginMouse(ActionEvent actionEvent) {
@@ -93,8 +110,10 @@ public class LoginController {
 			status.setVisible(true);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("An error occurred when connecting to SQL Database");
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setHeaderText("SQL Connection Failed");
+			errorAlert.setContentText("Please check that SQL Server is available and configured well");
+			errorAlert.showAndWait();
 
 		}
 	}

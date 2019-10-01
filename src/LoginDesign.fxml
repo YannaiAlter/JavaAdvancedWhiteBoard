@@ -80,4 +80,11 @@
          </cursor>
       </GridPane>
    </center>
+   <top>
+      <Label id="configuration" fx:id="configuration" onMouseClicked="#onConfigurationClick" prefHeight="30.0" prefWidth="30.0" BorderPane.alignment="TOP_RIGHT">
+         <BorderPane.margin>
+            <Insets right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
 </BorderPane>

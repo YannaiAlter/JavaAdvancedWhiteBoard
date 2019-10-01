@@ -33,7 +33,7 @@ public class DBFinals {
 
 			JSONObject configJson = (JSONObject) obj;
 			Map sqlConfig = ((Map)configJson.get("mysql"));
-			url = (String)sqlConfig.get("url");
+			url = "jdbc:mysql://" + sqlConfig.get("host") + "/javaproject?useSSL=false";
 			user = (String)sqlConfig.get("user");
 			password = (String)sqlConfig.get("password");
 			Map rmiConfig = ((Map)configJson.get("rmi"));

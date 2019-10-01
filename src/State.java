@@ -11,8 +11,8 @@ public class State {
 	static Timeline chatUpdateTimer;
 	static Timeline graphicsUpdateTimer;
 	static Object mainController;
-	static RoomInterface roomManager = RoomManager.getRoomManager();
-	static SQLInterface jdbcManager = JDBCManager.getJDBCManager();
+	static RoomInterface roomManager;
+	static SQLInterface jdbcManager;
 	static boolean isLoggedIn;
 	static Point lastClick;
 	static Date lastTimeUpdatedGraphics;
@@ -20,4 +20,17 @@ public class State {
 	static Label currentToolBoxItemClicked;
 	static String username;
 	static String roomName;
+	/*static
+	{
+		loadRoomManager();
+		loadJDBCManager();
+	}*/
+	public static void loadRoomManager()
+	{
+		roomManager = RoomManager.getRoomManager();
+	}
+	public static void loadJDBCManager()
+	{
+		jdbcManager = JDBCManager.getJDBCManager();
+	}
 }

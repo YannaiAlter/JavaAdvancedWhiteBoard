@@ -48,8 +48,6 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 			errorAlert.setHeaderText("RMI Connection Failed");
 			errorAlert.setContentText("Please check that RMI Server is available");
 			errorAlert.showAndWait();
-			e.printStackTrace();
-			System.exit(0);
 		}
 		return null;
 	}

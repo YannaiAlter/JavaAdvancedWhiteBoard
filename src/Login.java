@@ -29,7 +29,6 @@ public class Login extends Application {
 				stage.setTitle("Login");
 				stage.setScene(scene);
 				stage.show();
-				DBFinals.updateConfigurationFromFile("/etc/whiteBoard/config.json");
 			}catch(Exception e){
 				e.printStackTrace();
 			}
