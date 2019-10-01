@@ -14,6 +14,9 @@ public class State {
 	static SQLInterface jdbcManager;
 	static Point lastClick;
 	static Date lastTimeUpdatedGraphics;
+	static Date lastTimeUpdatedChat;
+	static Date lastTimeUpdatedRoomList;
+
 	static Shape.Type drawState = Shape.Type.LINE;
 	static Label currentToolBoxItemClicked;
 	static String username;

@@ -18,7 +18,10 @@ public interface RoomInterface extends Remote {
 	void setRoomConversation(String roomName,String text) throws RemoteException;
 
 	//Returns true if chat is updated to the latest version
-	boolean isChatUpdated(String roomName,String clientChat) throws  RemoteException;
+	boolean isChatUpdated(String roomName,Date chatLastUpdateTime) throws  RemoteException;
+
+	//Returns true if roomlist is updated to the latest version
+	boolean isRoomListUpdated(String roomName,Date roomListLastUpdateTime) throws  RemoteException;
 
 	//Returns the chat of roomName to the client
 	Chat getChatOfRoom(String roomName) throws RemoteException;
@@ -28,6 +31,12 @@ public interface RoomInterface extends Remote {
 
 	//This function is useful when the client has drawn something, then the clients update the date of the last update in the rmi side.
 	void updateGraphicsTime(String roomName) throws  RemoteException;
+
+	//This function is useful when the client has sent something, then the clients update the date of the last update in the rmi side.
+	void updateChatTime(String roomName) throws  RemoteException;
+
+	//This function is useful when the client has joined chat, then the clients update the date of the last update in the rmi side.
+	void updateRoomListTime(String roomName) throws  RemoteException;
 
 	//This function returns true if a client needs an update, called from the interval
 	boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) throws RemoteException;
@@ -44,8 +53,8 @@ public interface RoomInterface extends Remote {
 	//Returns last shape deleted to shapes' stack
 	void redoShapeOfRoom(String roomName) throws RemoteException;
 
-	//Returns the room of roomname
-	Room getRoom(String roomName) throws RemoteException;
+	//Returns last update of room name on server
+	Date getRoomListUpdateTimeOfRoom(String roomName) throws RemoteException;
 
 	//Adds a client to clients room list
 	void addClientToRoom(String roomName,String userName) throws RemoteException;

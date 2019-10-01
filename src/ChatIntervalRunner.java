@@ -22,14 +22,17 @@ public class ChatIntervalRunner  implements Runnable {
 
 			RoomController roomController=(RoomController) State.mainController;
 			String curRoom = State.roomName; //Getting current room using hashmap in roommanager
-			if(!State.roomManager.isChatUpdated(curRoom,roomController.outputChat.getText())) {
+			if(!State.roomManager.isChatUpdated(curRoom, State.lastTimeUpdatedChat)) {
 				roomController.outputChat.setText(State.roomManager.getChatOfRoom(curRoom).getChatConversation());
 				roomController.outputChat.setScrollTop(Double.MAX_VALUE);
+				State.lastTimeUpdatedChat = State.roomManager.getChatOfRoom(curRoom).getChatUpdateTime();
 			}
 
-				ArrayList<String>allClientsList = State.roomManager.getAllClientsOfRoom(State.roomName);
+			if(!State.roomManager.isRoomListUpdated(curRoom,State.lastTimeUpdatedRoomList)) {
+				ArrayList<String> allClientsList = State.roomManager.getAllClientsOfRoom(State.roomName);
 				roomController.roomList.setItems(FXCollections.observableList(allClientsList));
-
+				State.lastTimeUpdatedRoomList = State.roomManager.getRoomListUpdateTimeOfRoom(curRoom);
+			}
 
 		}
 		catch (Exception e) {

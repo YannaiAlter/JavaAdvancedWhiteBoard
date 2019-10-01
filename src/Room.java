@@ -15,14 +15,17 @@ class Room implements Serializable
 	ArrayList<Shape> shape = new ArrayList<>();
 	ArrayList<Shape> undoShapes = new ArrayList<>();
 	ArrayList<String> clients = new ArrayList<>();
-	Date updateTime;
+	Date graphicsUpdateTime;
+	Date roomListUpdateTime;
+
 	public Room(String roomName) {
 		this.name=roomName;
 		chat = new Chat("");
-		updateTime=new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
-
+		graphicsUpdateTime=new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
+		roomListUpdateTime=new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
 	}
-	public Date getDate() { return this.updateTime; }
+	public Date getGraphicsUpdateDate() { return this.graphicsUpdateTime; }
+	public Date getRoomListUpdateTime() { return this.roomListUpdateTime; }
 	public Chat getChat() { return this.chat; }
 	public String getRoomName(){
 		return this.name;
@@ -31,21 +34,23 @@ class Room implements Serializable
 	{
 		this.shape.add(shape);
 	}
-	public void doUpdate() {this.updateTime=new Date(System.currentTimeMillis());}
+	public void doGraphicsUpdate() {this.graphicsUpdateTime=new Date(System.currentTimeMillis());}
+	public void doRoomListUpdate() {this.roomListUpdateTime=new Date(System.currentTimeMillis());}
+
 	public ArrayList<Shape> getShapes() { return this.shape; }
 	public void undoShape()
 	{
 		if(this.shape.size() == 0) return;//If we are pressing undo while there is no objects on screen.
 		undoShapes.add(shape.get(shape.size()-1)); // adding to undoShapes which will behave like a stack saver
 		this.shape.remove(this.shape.size()-1);
-		doUpdate();
+		doGraphicsUpdate();
 	}
 	public void redoShape()
 	{
 		if(this.undoShapes.size() == 0) return;//If we are pressing redo while there is no what to redo.
 		this.shape.add(this.undoShapes.get(this.undoShapes.size()-1));
 		this.undoShapes.remove(this.undoShapes.size()-1);
-		doUpdate();
+		doGraphicsUpdate();
 	}
 	public void clearUndoShapes() //New state in case of drawing
 	{

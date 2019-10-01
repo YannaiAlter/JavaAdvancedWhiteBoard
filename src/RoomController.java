@@ -69,6 +69,8 @@ public class RoomController {
 			graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
 			initDraw();
 			cl = new ContinuousLine(colorPicker.getValue());
+			colorPicker.setValue(Color.BLACK);
+			
 			canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
 					event -> {
 					if (State.drawState == Shape.Type.LINE) {
@@ -319,6 +321,10 @@ http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
 	public void enterClick() {
 		appendChat(inputChat.getText());
 		inputChat.setText(null);
+		try {
+			State.roomManager.updateChatTime(State.roomName);
+		}
+		catch (Exception e) { e.printStackTrace(); }
 	}
 
 	public void onUndoClicked(MouseEvent event)
