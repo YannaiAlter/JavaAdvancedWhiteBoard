@@ -46,5 +46,9 @@ class Room implements Serializable
         this.undoShapes.remove(this.undoShapes.size()-1);
         doUpdate();
     }
+    public void clearUndoShapes() //New state in case of drawing
+    {
+        undoShapes.clear();
+    }
 
 }

@@ -49,4 +49,5 @@ public interface RoomInterface extends Remote {
 
     //Returns last shape deleted to shapes' stack
     void redoShapeOfRoom(String roomName) throws RemoteException;
+
 }

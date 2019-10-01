@@ -59,7 +59,9 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		roomLocker.put(roomName,new Object());
 		synchronized (roomLocker) {
 			Room x = getRoom(roomName);
-			x.addShape(shape);		}
+			x.addShape(shape);
+			x.clearUndoShapes();
+		}
 		roomLocker.remove(roomName);
 	}
 
@@ -207,4 +209,5 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 		roomLocker.remove(roomName);
 	}
+
 }
