@@ -47,5 +47,9 @@ public interface RoomInterface extends Remote {
 	//Returns the room of roomname
 	Room getRoom(String roomName) throws RemoteException;
 
+	//Adds a client to clients room list
+	void addClientToRoom(String roomName,String userName) throws RemoteException;
 
+	//Returns a string list will all rooms' clients.
+	ArrayList<String>getAllClientsOfRoom(String roomName) throws RemoteException;
 }

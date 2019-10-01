@@ -1,4 +1,7 @@
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+
+import java.util.ArrayList;
 
 public class ChatIntervalRunner  implements Runnable {
 	Timeline timerUpdateList;
@@ -23,6 +26,10 @@ public class ChatIntervalRunner  implements Runnable {
 				roomController.outputChat.setText(State.roomManager.getChatOfRoom(curRoom).getChatConversation());
 				roomController.outputChat.setScrollTop(Double.MAX_VALUE);
 			}
+
+				ArrayList<String>allClientsList = State.roomManager.getAllClientsOfRoom(State.roomName);
+				roomController.roomList.setItems(FXCollections.observableList(allClientsList));
+
 
 		}
 		catch (Exception e) {

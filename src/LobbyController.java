@@ -51,13 +51,15 @@ public class LobbyController {
 			/* Updating relevant states*/
 			State.lastTimeUpdatedGraphics = new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
 			State.roomName=clickedRoomName;
-			State.roomManager.setRoomConversation(clickedRoomName,"[Server]: User " + State.username + " has joined the room. \r\n");
+			State.roomManager.setRoomConversation(clickedRoomName,"[Server]: " + State.username + " has joined the room. \r\n");
 			/*Calling Timer Chat interval*/
 			Timeline chatUpdateTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.CHAT_UPDATE_INTERVAL_TIME), event -> Platform.runLater(chat)));
 			chatUpdateTimer.setCycleCount(Timeline.INDEFINITE);
 			chatUpdateTimer.play();
 			chat.setTimerUpdateList(chatUpdateTimer);
 			State.chatUpdateTimer = chatUpdateTimer;
+
+			State.roomManager.addClientToRoom(clickedRoomName,State.username);
 
 			GraphicsIntervalRunner graphics = new GraphicsIntervalRunner();
 			Timeline graphicsUpdateTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.WHITEBOARD_UPDATES_INTERVAL_TIME), event -> Platform.runLater(graphics)));

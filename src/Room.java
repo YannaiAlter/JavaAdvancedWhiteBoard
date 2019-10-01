@@ -14,6 +14,7 @@ class Room implements Serializable
 	Chat chat;
 	ArrayList<Shape> shape = new ArrayList<>();
 	ArrayList<Shape> undoShapes = new ArrayList<>();
+	ArrayList<String> clients = new ArrayList<>();
 	Date updateTime;
 	public Room(String roomName) {
 		this.name=roomName;
@@ -50,5 +51,12 @@ class Room implements Serializable
 	{
 		undoShapes.clear();
 	}
+	public void addClient(String userName)
+	{
+		clients.add(userName);
+	}
 
+	public ArrayList<String> getAllClients() {
+		return clients;
+	}
 }

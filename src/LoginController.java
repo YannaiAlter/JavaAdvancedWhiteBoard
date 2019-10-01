@@ -87,7 +87,6 @@ public class LoginController {
 					mainStage.setScene(lobbyScene);
 					mainStage.show();
 					State.mainController = loader.getController();
-
 					State.username=username.getText();
 					//    ((LobbyController)State.mainController).setUsername(username.getText());
 					Lobby lobby = new Lobby();

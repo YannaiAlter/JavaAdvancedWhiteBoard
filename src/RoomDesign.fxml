@@ -4,6 +4,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -76,6 +77,13 @@
                </opaqueInsets>
             </GridPane>
          </bottom>
+         <center>
+            <ListView fx:id="roomList" prefHeight="100.0" prefWidth="486.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </BorderPane.margin>
+            </ListView>
+         </center>
       </BorderPane>
       <BorderPane fx:id="whiteBoard" GridPane.columnIndex="1">
          <bottom>

@@ -58,6 +58,8 @@ public class RoomController {
 		Label pencilLabel;
 	@FXML
 		ColorPicker colorPicker;
+	@FXML
+		ListView roomList;
 
 	private GraphicsContext graphicsContext;
 	ContinuousLine cl;

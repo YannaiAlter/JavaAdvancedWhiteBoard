@@ -37,7 +37,26 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 
 	}
-
+	public boolean isClientsListUpdated(ArrayList<String> clientsList,String roomName)
+	{
+		try {
+			return State.roomManager.getAllClientsOfRoom(roomName).equals(clientsList);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public void addClientToRoom(String roomName,String userName)
+	{
+		Room r = getRoom(roomName);
+		r.addClient(userName);
+	}
+	public ArrayList<String> getAllClientsOfRoom(String roomName)
+	{
+		return getRoom(roomName).getAllClients();
+	}
 	public static RoomInterface getRoomManager() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
