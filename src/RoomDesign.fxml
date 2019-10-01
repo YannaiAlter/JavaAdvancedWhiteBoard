@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -81,6 +82,7 @@
             <GridPane id="toolbox" alignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints />
+                  <ColumnConstraints />
                   <ColumnConstraints minWidth="10.0" />
                   <ColumnConstraints minWidth="10.0" />
                   <ColumnConstraints />
@@ -94,7 +96,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label id="line" fx:id="lineLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onLineClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="line" fx:id="lineLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onLineClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -102,27 +104,27 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="rectangle" fx:id="rectangleLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onRectangleClick" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="rectangle" fx:id="rectangleLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onRectangleClick" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="circle" fx:id="circleLabel" onMouseClicked="#onCircleClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="circle" fx:id="circleLabel" onMouseClicked="#onCircleClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="logout" fx:id="logout" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="8" GridPane.halignment="RIGHT">
+                  <Label id="logout" fx:id="logout" onMouseClicked="#logoutClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="9" GridPane.halignment="RIGHT">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="undo" fx:id="undo" onMouseClicked="#onUndoClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="5">
+                  <Label id="undo" fx:id="undo" onMouseClicked="#onUndoClicked" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="6">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="text" fx:id="textLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onTextClick" prefHeight="32.0" prefWidth="37.0" text="T" textAlignment="CENTER" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="text" fx:id="textLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onTextClick" prefHeight="32.0" prefWidth="37.0" text="T" textAlignment="CENTER" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -130,16 +132,21 @@
                         <Font name="Arial Bold" size="28.0" />
                      </font>
                   </Label>
-                  <Label id="redo" fx:id="redoLabel" onMouseClicked="#onRedoClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="redo" fx:id="redoLabel" onMouseClicked="#onRedoClick" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label id="pencil" fx:id="pencilLabel" onMouseClicked="#onPencilClick" prefHeight="30.0" prefWidth="30.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label id="pencil" fx:id="pencilLabel" onMouseClicked="#onPencilClick" prefHeight="30.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
+                  <ColorPicker fx:id="colorPicker" prefHeight="30.0" prefWidth="30.0">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </GridPane.margin>
+                  </ColorPicker>
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />

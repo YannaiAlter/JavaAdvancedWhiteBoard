@@ -7,10 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
@@ -56,6 +56,8 @@ public class RoomController {
 		Label redoLabel;
 	@FXML
 		Label pencilLabel;
+	@FXML
+		ColorPicker colorPicker;
 
 	private GraphicsContext graphicsContext;
 	ContinuousLine cl;
@@ -64,7 +66,7 @@ public class RoomController {
 		public void initialize() {
 			graphicsContext = canvasWhiteBoard.getGraphicsContext2D();
 			initDraw();
-			cl = new ContinuousLine();
+			cl = new ContinuousLine(colorPicker.getValue());
 			canvasWhiteBoard.addEventHandler(MouseEvent.MOUSE_PRESSED,
 					event -> {
 					if (State.drawState == Shape.Type.LINE) {
@@ -74,10 +76,10 @@ public class RoomController {
 					} else if (State.drawState == Shape.Type.LINE_SECOND_CLICK) {
 					Point firstClick = State.lastClick;
 					Point secondClick = new Point((int)event.getX(),(int)event.getY());
-					drawLine(firstClick,secondClick);
+					drawLine(firstClick,secondClick,colorPicker.getValue());
 					State.drawState = Shape.Type.LINE;
 					try {
-					State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY())));
+					State.roomManager.addShapeToRoom(State.roomName, new Line(State.lastClick, new Point((int) event.getX(), (int) event.getY()),colorPicker.getValue()));
 					State.roomManager.updateGraphicsTime(State.roomName);
 					}
 					catch (Exception e)
@@ -88,9 +90,9 @@ public class RoomController {
 					else if(State.drawState == Shape.Type.RECTANGLE)
 					{
 						Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
-						drawRectangle(clickedPoint,50,50);
+						drawRectangle(clickedPoint,50,50,colorPicker.getValue());
 						try {
-							State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint));
+							State.roomManager.addShapeToRoom(State.roomName, new Rectangle(clickedPoint,colorPicker.getValue()));
 							State.roomManager.updateGraphicsTime(State.roomName);
 						} catch (Exception e) { e.printStackTrace(); }
 
@@ -99,8 +101,8 @@ public class RoomController {
 					{
 						Point clickedPoint = new Point((int) event.getX(), (int) event.getY());
 						try{
-							drawCircle(clickedPoint,50,50);
-							State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50));
+							drawCircle(clickedPoint,50,50,colorPicker.getValue());
+							State.roomManager.addShapeToRoom(State.roomName,new Circle(clickedPoint,50,50,colorPicker.getValue()));
 							State.roomManager.updateGraphicsTime(State.roomName);
 						} catch (Exception e) { e.printStackTrace(); }
 					}
@@ -114,15 +116,15 @@ public class RoomController {
 						Optional<String> result = dialog.showAndWait();
 						if (!result.isPresent()) return;
 
-						drawText(result.get(),clickedPoint);
+						drawText(result.get(),clickedPoint,colorPicker.getValue());
 						try {
-							State.roomManager.addShapeToRoom(State.roomName, new Text(result.get(), clickedPoint));
+							State.roomManager.addShapeToRoom(State.roomName, new Text(result.get(), clickedPoint,colorPicker.getValue()));
 							State.roomManager.updateGraphicsTime(State.roomName);
 						} catch (Exception e) { e.printStackTrace(); }
 					}
 					else if(State.drawState == Shape.Type.CONTINUOUS_LINE)
 					{
-						drawContinuousLineFirstClick((int)event.getX(),(int)event.getY());
+						drawContinuousLineFirstClick((int)event.getX(),(int)event.getY(),colorPicker.getValue());
 					}
 					});
 
@@ -145,27 +147,28 @@ public class RoomController {
 	{
 		graphicsContext.clearRect(0, 0, canvasWhiteBoard.getWidth(), canvasWhiteBoard.getHeight());
 	}
-	synchronized void  drawLine(Point p1, Point p2)
+	synchronized void  drawLine(Point p1, Point p2,Color color)
 	{
 		initDraw();
-		graphicsContext.setStroke(Color.BLACK);
+		graphicsContext.setStroke(color);
 		graphicsContext.setLineWidth(3);
 		graphicsContext.strokeLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
 	}
-	synchronized void drawRectangle(Point p1,int width,int height)
+	synchronized void drawRectangle(Point p1,int width,int height,Color color)
 	{
-		graphicsContext.setStroke(Color.BLACK);
+		graphicsContext.setStroke(color);
 		graphicsContext.strokeRect(p1.getX(),p1.getY(),width,height);
 	}
-	synchronized void drawCircle(Point p1,int radiusX,int radiusY)
+	synchronized void drawCircle(Point p1,int radiusX,int radiusY,Color color)
 	{
-		graphicsContext.setStroke(Color.BLACK);
+		graphicsContext.setStroke(color);
 		graphicsContext.strokeOval(p1.getX(),p1.getY(),radiusX,radiusY);
 	}
-	synchronized void drawContinuousLine(ArrayList<Point> points)
+	synchronized void drawContinuousLine(ArrayList<Point> points,Color color)
 	{
 		int first_x = (int) points.get(0).getX();
 		int first_y = (int) points.get(0).getY();
+		graphicsContext.setStroke(color);
 		graphicsContext.setLineWidth(2);
 		graphicsContext.beginPath();
 		graphicsContext.moveTo(first_x, first_y);
@@ -185,10 +188,11 @@ public class RoomController {
 		graphicsContext.stroke();
 		cl.addPoint(new Point(x,y));
 	}
-	synchronized private void drawContinuousLineFirstClick(int x,int y)
+	synchronized private void drawContinuousLineFirstClick(int x,int y,Color color)
 	{
 		State.graphicsUpdateTimer.stop();
 		graphicsContext.setLineWidth(2);
+		graphicsContext.setStroke(color);
 		graphicsContext.beginPath();
 		graphicsContext.moveTo(x, y);
 		graphicsContext.stroke();
@@ -199,6 +203,7 @@ public class RoomController {
 		State.graphicsUpdateTimer.play();
 		try {
 			if (State.drawState == Shape.Type.CONTINUOUS_LINE) {
+				cl.setColor(colorPicker.getValue());
 				State.roomManager.addShapeToRoom(State.roomName, cl);
 				State.roomManager.updateGraphicsTime(State.roomName);
 				cl.clear();
@@ -206,10 +211,10 @@ public class RoomController {
 		}
 		catch (Exception e) { e.printStackTrace(); }
 	}
-	synchronized void drawText(String text, Point p1)
+	synchronized void drawText(String text, Point p1,Color color)
 	{
 		graphicsContext.setFont(new Font("Arial", 20));
-		graphicsContext.setFill(Color.BLACK);
+		graphicsContext.setFill(color);
 		graphicsContext.fillText(text,p1.getX(),p1.getY());
 	}
 	/* In case of sending a message on chat, appendChat function will be used to update the room conversation on the RMI RoomManager instance,
@@ -217,7 +222,7 @@ public class RoomController {
 	 */
 	synchronized void appendChat(String newMessage) {
 		try {
-			State.roomManager.setRoomConversation(State.roomManager.getClientRoom(State.username), "["+State.username +"]: " +newMessage +"\r\n");
+			State.roomManager.setRoomConversation(State.roomName, "["+State.username +"]: " +newMessage +"\r\n");
 		}
 		catch(Exception e)
 		{

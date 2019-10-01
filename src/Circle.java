@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -11,9 +13,9 @@ public class Circle extends Shape implements Serializable {
 		this.radiusX=50;
 		this.radiusY=50;
 	}
-	Circle(Point centerPoint,int radiusX,int radiusY)
+	Circle(Point centerPoint,int radiusX,int radiusY, Color color)
 	{
-		super(Type.CIRCLE);
+		super(color,Type.CIRCLE);
 		this.centerPoint = centerPoint;
 		this.radiusX=radiusX;
 		this.radiusY=radiusY;
@@ -22,6 +24,6 @@ public class Circle extends Shape implements Serializable {
 		public void draw()
 		{
 			RoomController roomController = (RoomController)State.mainController;
-			roomController.drawCircle(centerPoint,radiusX,radiusY);
+			roomController.drawCircle(centerPoint,radiusX,radiusY,Shape.awtToFx(super.color));
 		}
 }

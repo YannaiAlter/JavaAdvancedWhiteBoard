@@ -122,13 +122,6 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		return null;
 
 	}
-	public void setClientRoom(String key, String value) {
-		roomOfClient.put(key,value);
-	}
-
-	public String getClientRoom(String key){
-		return roomOfClient.get(key);
-	}
 
 	public static void main(String args[]) {
 
@@ -142,7 +135,7 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	}
 
-	private Room getRoom(String roomName)
+	public Room getRoom(String roomName)
 	{
 		for (Room x : room) {
 			if (x.getRoomName().equals(roomName)) {

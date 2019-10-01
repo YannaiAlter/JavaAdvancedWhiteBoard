@@ -1,11 +1,14 @@
+import javafx.scene.paint.Color;
+
 import java.awt.*;
 import java.io.Serializable;
 
 public class Text extends Shape implements Serializable {
 	Point textStartPoint;
 	String text;
-	Text(String text, Point clickedPoint)
+	Text(String text, Point clickedPoint, Color color)
 	{
+		super(color,Type.TEXT);
 		this.textStartPoint = clickedPoint;
 		this.text = text;
 	}
@@ -14,6 +17,6 @@ public class Text extends Shape implements Serializable {
 		public void draw()
 		{
 			RoomController roomController = (RoomController)State.mainController;
-			roomController.drawText(text,textStartPoint);
+			roomController.drawText(text,textStartPoint,Shape.awtToFx(super.color));
 		}
 }

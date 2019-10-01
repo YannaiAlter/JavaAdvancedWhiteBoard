@@ -23,9 +23,6 @@ public interface RoomInterface extends Remote {
 	//Returns the chat of roomName to the client
 	Chat getChatOfRoom(String roomName) throws RemoteException;
 
-	//Updates that a client has joined roomName by using the hash-map
-	void setClientRoom(String username, String roomName) throws RemoteException;
-
 	//This function gets roomName and a Shape and adds it to the stack of all shapes in RMI.
 	void addShapeToRoom(String roomName, Shape shape) throws  RemoteException;
 
@@ -34,9 +31,6 @@ public interface RoomInterface extends Remote {
 
 	//This function returns true if a client needs an update, called from the interval
 	boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) throws RemoteException;
-
-	//This function gets username of a client and returns the Room he is at
-	String getClientRoom(String username) throws RemoteException;
 
 	//Returns the time of the newest update, this is useful in case a client needs update, to mark that he did the update.
 	Date getWhiteBoardUpdateTimeOfRoom(String roomName) throws RemoteException;
@@ -49,5 +43,9 @@ public interface RoomInterface extends Remote {
 
 	//Returns last shape deleted to shapes' stack
 	void redoShapeOfRoom(String roomName) throws RemoteException;
+
+	//Returns the room of roomname
+	Room getRoom(String roomName) throws RemoteException;
+
 
 }
