@@ -21,10 +21,10 @@ public class State {
 	static String username;
 	static String roomName;
 	/*static
-	{
-		loadRoomManager();
-		loadJDBCManager();
-	}*/
+	  {
+	  loadRoomManager();
+	  loadJDBCManager();
+	  }*/
 	public static void loadRoomManager()
 	{
 		roomManager = RoomManager.getRoomManager();

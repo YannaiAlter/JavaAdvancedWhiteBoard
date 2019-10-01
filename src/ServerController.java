@@ -31,18 +31,18 @@ public class ServerController {
 				errorAlert.setHeaderText("RMI Creation Failed");
 				errorAlert.setContentText("Please check that RMI port is available and RMI configured well");
 				errorAlert.showAndWait();			}
-			}
-			try
-			{
-				JDBCManager jdbcManager = new JDBCManager();
-			}
-			catch (Exception e)
-			{
-				Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-				errorAlert.setHeaderText("SQL Creation Failed");
-				errorAlert.setContentText("Please check that SQL Server is available and configured well");
-				errorAlert.showAndWait();
-			}
+		}
+		try
+		{
+			JDBCManager jdbcManager = new JDBCManager();
+		}
+		catch (Exception e)
+		{
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setHeaderText("SQL Creation Failed");
+			errorAlert.setContentText("Please check that SQL Server is available and configured well");
+			errorAlert.showAndWait();
+		}
 
 	}
 	public void browseClick()
