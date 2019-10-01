@@ -44,6 +44,7 @@ public class LobbyController {
 			Scene lobbyScene = new Scene(lobbyParent);
 			Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 			mainStage.setScene(lobbyScene);
+			mainStage.setTitle("Room: " + clickedRoomName);
 			mainStage.show();
 			State.mainController = loader.getController();
 			ChatIntervalRunner chat = new ChatIntervalRunner();
@@ -126,6 +127,7 @@ public class LobbyController {
 			Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 			mainStage.setScene(loginScene);
 			mainStage.show();
+			mainStage.setTitle("Login");
 			State.mainController=loader.getController();
 		}
 		catch (Exception e){

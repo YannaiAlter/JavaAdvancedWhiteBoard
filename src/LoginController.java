@@ -85,6 +85,7 @@ public class LoginController {
 					Scene lobbyScene = new Scene(lobbyParent);
 					Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 					mainStage.setScene(lobbyScene);
+					mainStage.setTitle("Lobby");
 					mainStage.show();
 					State.mainController = loader.getController();
 					State.username=username.getText();
