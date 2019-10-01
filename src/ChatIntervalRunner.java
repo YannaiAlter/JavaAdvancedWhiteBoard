@@ -1,9 +1,4 @@
 import javafx.animation.Timeline;
-import javafx.scene.text.TextFlow;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ChatIntervalRunner  implements Runnable {
 	Timeline timerUpdateList;

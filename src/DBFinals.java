@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class DBFinals {
 
-	// TODO: 2019-09-20  capital letters
 	static String url="jdbc:mysql://localhost/javaproject?useSSL=false";
 	static String user="root";
 	static String password="yanayyanay";

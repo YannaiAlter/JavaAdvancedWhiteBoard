@@ -1,7 +1,6 @@
 import javafx.animation.Timeline;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class GraphicsIntervalRunner implements Runnable {
 	Timeline timerUpdateList;

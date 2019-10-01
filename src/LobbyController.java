@@ -109,8 +109,6 @@ public class LobbyController {
 				e.printStackTrace();
 			}
 		}
-
-		//RoomManager.addRoom();
 		return true;
 	}
 

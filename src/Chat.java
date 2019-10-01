@@ -1,6 +1,3 @@
-import javafx.scene.control.TextField;
-import javafx.scene.text.TextFlow;
-
 import java.io.Serializable;
 
 public class Chat implements Serializable {
