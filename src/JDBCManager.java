@@ -119,12 +119,12 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 				if (rs.getBoolean("loggedin") == true)//username already logged in
 					return 3;
 
-				if (rs.getString("password").equals(password)) {
-					//do something
-					rs.close();
+				if (rs.getString("password").equals(password))
 					return 0;
-				} else
+
+
 					return 2;
+
 			}
 		}//end try
 		catch (Exception e) {
