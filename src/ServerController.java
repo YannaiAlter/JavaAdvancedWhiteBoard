@@ -1,4 +1,5 @@
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -25,12 +26,23 @@ public class ServerController {
 			status.setText("Server Status: Running");
 			try {
 				RoomManager room = new RoomManager();
-				JDBCManager jdbcManager = new JDBCManager();
-
 			} catch (Exception e) {
-				e.printStackTrace();
+				Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+				errorAlert.setHeaderText("RMI Creation Failed");
+				errorAlert.setContentText("Please check that RMI port is available and RMI configured well");
+				errorAlert.showAndWait();			}
 			}
-		}
+			try
+			{
+				JDBCManager jdbcManager = new JDBCManager();
+			}
+			catch (Exception e)
+			{
+				Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+				errorAlert.setHeaderText("SQL Creation Failed");
+				errorAlert.setContentText("Please check that SQL Server is available and configured well");
+				errorAlert.showAndWait();
+			}
 
 	}
 	public void browseClick()
