@@ -5,7 +5,9 @@ This is a project i'm working on course: 20503 - https://www.openu.ac.il/courses
   * Open the project with an IDE (Intellij recommended) and include all files at lib folder
   * JavaFX library requires some more steps in addition to the including, make sure you follow those steps here:
   https://openjfx.io/
-  
+## Configuration
+ * You can configure the server host and port and some more properties by editing the file config.json under the config directory. make sure you are loading this file when running the server.
+ * The same is for the client - you need to edit a config file with the information about the sql and rmi host, and then load this configuration on the login window
 ![alt text](https://github.com/YannaiAlter/JavaAdvancedWhiteBoard/blob/master/guides/images/lobby.png)
 ![alt text](https://github.com/YannaiAlter/JavaAdvancedWhiteBoard/blob/master/guides/images/chat_room.png)
 ![alt text](https://github.com/YannaiAlter/JavaAdvancedWhiteBoard/blob/master/guides/images/server_running.png)
