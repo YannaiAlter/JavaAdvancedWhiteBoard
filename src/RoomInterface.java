@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 public interface RoomInterface extends Remote {
 
 	//This function adds a new room to the room list in RMI
-	boolean addRoom(String roomName) throws RemoteException;
+	boolean addRoom(String roomName,String adminUserName) throws RemoteException;
 
 	//Useful in lobby - returns a String list of all room names.
 	ArrayList<String> getRoomsAsString() throws RemoteException;
@@ -38,6 +38,8 @@ public interface RoomInterface extends Remote {
 	//This function is useful when the client has joined chat, then the clients update the date of the last update in the rmi side.
 	void updateRoomListTime(String roomName) throws  RemoteException;
 
+	boolean isAdmin(String userName,String roomName) throws RemoteException;
+
 	//This function returns true if a client needs an update, called from the interval
 	boolean isBoardUpdated(String roomName,Date clientLastUpdateTime) throws RemoteException;
 
@@ -59,6 +61,8 @@ public interface RoomInterface extends Remote {
 
 	//Adds a client to clients room list
 	void addClientToRoom(String roomName,String userName) throws RemoteException;
+
+	void deleteRoom(String roomName) throws RemoteException;
 
 	//Returns a string list will all rooms' clients.
 	ArrayList<String>getAllClientsOfRoom(String roomName) throws RemoteException;

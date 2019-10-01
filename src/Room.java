@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 class Room implements Serializable
 {
 	String name;
+	String roomAdminUserName;
 	Chat chat;
 	ArrayList<Shape> shape = new ArrayList<>();
 	ArrayList<Shape> undoShapes = new ArrayList<>();
@@ -18,11 +19,12 @@ class Room implements Serializable
 	Date graphicsUpdateTime;
 	Date roomListUpdateTime;
 
-	public Room(String roomName) {
+	public Room(String roomName,String roomAdminUserName) {
 		this.name=roomName;
 		chat = new Chat("");
 		graphicsUpdateTime=new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
 		roomListUpdateTime=new GregorianCalendar(2000, Calendar.OCTOBER, 27).getTime();
+		this.roomAdminUserName = roomAdminUserName;
 	}
 	public Date getGraphicsUpdateDate() { return this.graphicsUpdateTime; }
 	public Date getRoomListUpdateTime() { return this.roomListUpdateTime; }
@@ -36,6 +38,9 @@ class Room implements Serializable
 	}
 	public void doGraphicsUpdate() {this.graphicsUpdateTime=new Date(System.currentTimeMillis());}
 	public void doRoomListUpdate() {this.roomListUpdateTime=new Date(System.currentTimeMillis());}
+	public boolean isAdmin(String userName) {
+		return this.roomAdminUserName.equals(userName);
+	}
 	public void deleteUser(String userName)
 	{
 		for(int i=0;i<clients.size();i++)

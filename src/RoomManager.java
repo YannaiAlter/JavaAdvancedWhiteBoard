@@ -20,12 +20,10 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 
 	ArrayList<Room> room;
 	Registry registry;
-	HashMap<String, String> roomOfClient; //Client username to room name
 
 	public RoomManager() throws RemoteException {
 		System.err.println("Server ready");
 		room = new ArrayList<>();
-		roomOfClient = new HashMap<String, String>();
 		try {
 			System.setProperty("java.rmi.server.hostname", DBFinals.RMIHost);
 			registry = LocateRegistry.createRegistry(DBFinals.RMIPort);
@@ -52,6 +50,12 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 		}
 		return false;
 	}
+
+	public boolean isAdmin(String userName,String roomName)
+	{
+		Room r = getRoom(roomName);
+		return r.isAdmin(userName);
+	}
 	public void addClientToRoom(String roomName,String userName)
 	{
 		Room r = getRoom(roomName);
@@ -60,6 +64,11 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	public ArrayList<String> getAllClientsOfRoom(String roomName)
 	{
 		return getRoom(roomName).getAllClients();
+	}
+	public void deleteRoom(String roomName)
+	{
+		System.out.println(roomName);
+		for(int i=0; i<room.size(); i++) if(room.get(i).getRoomName().equals(roomName))room.remove(i);
 	}
 	public void deleteUserFromRoom(String roomName,String userName)
 	{
@@ -100,10 +109,10 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 			return list;
 		}
 
-	public synchronized boolean addRoom(String roomName)  {
+	public synchronized boolean addRoom(String roomName,String adminUserName)  {
 		Room r = getRoom(roomName); //check if room is already exists
 		if(r != null) return false;
-		Room newRoom = new Room(roomName);
+		Room newRoom = new Room(roomName, adminUserName);
 		room.add(newRoom);
 		return true;
 	}

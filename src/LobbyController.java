@@ -2,19 +2,20 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
 import java.util.*;
 
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,7 +35,33 @@ public class LobbyController {
 	@FXML
 		Button disconnect;
 
+	public void initialize()
+	{
 
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem deleteRoomItem = new MenuItem("Delete Room");
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(deleteRoomItem);
+
+		deleteRoomItem.setOnAction(event ->
+		{
+			try {
+				System.out.println(roomList.getSelectionModel().getSelectedItem());
+			if(State.roomManager.isAdmin(State.username,(String)roomList.getSelectionModel().getSelectedItem())) {
+				State.roomManager.deleteRoom((String) roomList.getSelectionModel().getSelectedItem());
+			}
+
+			} catch (Exception e) { e.printStackTrace(); }
+		});
+		roomList.setOnMouseClicked(event->
+				{
+						if (event.getButton() == MouseButton.SECONDARY)
+							contextMenu.show(roomList, event.getScreenX(), event.getScreenY());
+						else if (event.getButton() == MouseButton.PRIMARY) contextMenu.hide();
+
+				}
+		);
+	}
 	public void joinRoom(javafx.event.ActionEvent actionEvent)
 	{
 		try {
@@ -100,7 +127,7 @@ public class LobbyController {
 		if (result.isPresent()){
 			System.out.println("Room's name: " + result.get());
 			try {
-				boolean roomExists = State.roomManager.addRoom(result.get()); // adding to rmi server
+				boolean roomExists = State.roomManager.addRoom(result.get(),State.username); // adding to rmi server
 				if(!roomExists)
 				{
 					Alert errorAlert = new Alert(Alert.AlertType.ERROR);
