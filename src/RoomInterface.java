@@ -53,6 +53,7 @@ public interface RoomInterface extends Remote {
 	//Returns last shape deleted to shapes' stack
 	void redoShapeOfRoom(String roomName) throws RemoteException;
 
+	void deleteUserFromRoom(String roomName,String userName) throws RemoteException;
 	//Returns last update of room name on server
 	Date getRoomListUpdateTimeOfRoom(String roomName) throws RemoteException;
 

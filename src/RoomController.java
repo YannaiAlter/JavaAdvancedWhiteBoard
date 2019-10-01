@@ -294,7 +294,9 @@ http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
 	{
 		try {
 			State.roomManager.setRoomConversation(State.roomName,"[Server]: User " + State.username + " has left the room. \r\n");
-
+			State.roomManager.deleteUserFromRoom(State.roomName,State.username);
+			State.roomManager.updateChatTime(State.roomName);
+			State.roomManager.updateRoomListTime(State.roomName);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyDesign.fxml"));
 			Parent lobbyParent = loader.load();
 			Scene lobbyScene = new Scene(lobbyParent);

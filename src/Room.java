@@ -36,7 +36,13 @@ class Room implements Serializable
 	}
 	public void doGraphicsUpdate() {this.graphicsUpdateTime=new Date(System.currentTimeMillis());}
 	public void doRoomListUpdate() {this.roomListUpdateTime=new Date(System.currentTimeMillis());}
-
+	public void deleteUser(String userName)
+	{
+		for(int i=0;i<clients.size();i++)
+		{
+			if(clients.get(i).equals(userName)) clients.remove(i);
+		}
+	}
 	public ArrayList<Shape> getShapes() { return this.shape; }
 	public void undoShape()
 	{

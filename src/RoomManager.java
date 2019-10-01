@@ -61,6 +61,11 @@ public class RoomManager extends UnicastRemoteObject implements RoomInterface {
 	{
 		return getRoom(roomName).getAllClients();
 	}
+	public void deleteUserFromRoom(String roomName,String userName)
+	{
+		Room r = getRoom(roomName);
+		r.deleteUser(userName);
+	}
 	public static RoomInterface getRoomManager() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(DBFinals.RMIHost, DBFinals.RMIPort);
