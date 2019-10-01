@@ -5,8 +5,12 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
+import java.util.HashMap;
 
 public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
+
+	private HashMap roomLocker=new HashMap(); //Locks specific room with synchronized
+
 	public static void main(String args[]) {
 		try {
 			Connection connection = null; // manages connection
@@ -50,37 +54,42 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 
 	public boolean createUser(String username, String password)
 	{
+
 		Connection connection = null; // manages connection
 		PreparedStatement pt = null; // manages prepared statement
 
 		// connect to database usernames and query database
 		try {
+			roomLocker.put(username,new Object());
+			synchronized (roomLocker) {
+				// establish connection to database
+				Class.forName("com.mysql.jdbc.Driver");
+				connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-			// establish connection to database
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+				pt = connection.prepareStatement("select username,password from accounts where username=? for update"); //select for update will lock database
 
-			pt = connection.prepareStatement("select username,password from accounts where username=? for update"); //select for update will lock database
-
-			// process query results
-			pt.setString(1, username);
-			ResultSet rs = pt.executeQuery();
-			if (rs.next()) //username already exists
-				return false;
+				// process query results
+				pt.setString(1, username);
+				ResultSet rs = pt.executeQuery();
+				if (rs.next()) //username already exists
+					return false;
 
 
-			// query database
-			pt = connection.prepareStatement("insert into accounts values(?,?,?);");
+				// query database
+				pt = connection.prepareStatement("insert into accounts values(?,?,?);");
 
-			// process query results
-			pt.setString(1, username);
-			pt.setString(2, password);
-			pt.setBoolean(3, false);
-			pt.executeUpdate();
-
+				// process query results
+				pt.setString(1, username);
+				pt.setString(2, password);
+				pt.setBoolean(3, false);
+				pt.executeUpdate();
+			}
 		}//end try
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally {
+			roomLocker.remove(username);
 		}
 
 		return true;
@@ -93,35 +102,40 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 
 		// connect to database usernames and query database
 		try {
+			roomLocker.put(username,new Object());
+			synchronized (roomLocker) {
+				// establish connection to database
+				Class.forName("com.mysql.jdbc.Driver");
 
-			// establish connection to database
-			Class.forName("com.mysql.jdbc.Driver");
+				connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+				// query database
+				pt = connection.prepareStatement("select username,password,loggedin from accounts where username=? for update");
 
-			// query database
-			pt = connection.prepareStatement("select username,password,loggedin from accounts where username=? for update");
+				// process query results
+				pt.setString(1, username);
+				ResultSet rs = pt.executeQuery();
 
-			// process query results
-			pt.setString(1, username);
-			ResultSet rs = pt.executeQuery();
+				if (!rs.next()) //username not exists
+					return 1;
+				if (rs.getBoolean("loggedin") == true)//username already logged in
+					return 3;
 
-			if (!rs.next()) //username not exists
-				return 1;
-			if(rs.getBoolean("loggedin")==true)//username already logged in
-				return 3;
-
-			if ( rs.getString("password").equals(password)) {
-				//do something
-				rs.close();
-				return 0;
+				if (rs.getString("password").equals(password)) {
+					//do something
+					rs.close();
+					return 0;
+				} else
+					return 2;
 			}
-			else
-				return 2;
 		}//end try
 		catch (Exception e) {
 			e.printStackTrace();
 		} //end catch
+		finally
+		{
+			roomLocker.remove("username");
+		}
 		return -1;
 	}
 	public void LogInOutUser(String username,boolean in){
@@ -130,20 +144,24 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 
 		// connect to database usernames and query database
 		try {
-			// establish connection to database
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
+			roomLocker.put(username,new Object());
+			synchronized (roomLocker) {
+				// establish connection to database
+				Class.forName("com.mysql.jdbc.Driver");
+				connection = DriverManager.getConnection(DBFinals.url, DBFinals.user, DBFinals.password);
 
-			pt = connection.prepareStatement("update accounts set loggedin=? OUTPUT @@error as ErrorCode, DELETED.loggedin as DeletedName, INSERTED.loggedin as InsertedName\n where username=?");
-			//OUTPUT makes it atomic:
-			//https://www.codeproject.com/Tips/314241/SQL-Atomic-Operation-on-UPDATE-and-DELETE
+				pt = connection.prepareStatement("update accounts set loggedin=? where username=?");
 
-			pt.setBoolean(1,in);
-			pt.setString(2, username);
-			pt.executeUpdate();
+				pt.setBoolean(1, in);
+				pt.setString(2, username);
+				pt.executeUpdate();
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally {
+			roomLocker.remove(username);
 		}
 	}
 }

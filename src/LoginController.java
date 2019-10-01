@@ -46,7 +46,7 @@ public class LoginController {
 			}
 		}
 		catch (Exception e) {
-			System.out.println("An error occurred when connecting to SQL Database");
+			e.printStackTrace();
 		}
 	}
 	public void onLoginMouse(ActionEvent actionEvent) {
@@ -95,6 +95,7 @@ public class LoginController {
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("An error occurred when connecting to SQL Database");
+
 		}
 	}
 }
