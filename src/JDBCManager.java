@@ -132,7 +132,7 @@ public class JDBCManager extends UnicastRemoteObject implements SQLInterface {
 		} //end catch
 		finally
 		{
-			roomLocker.remove("username");
+			roomLocker.remove(username);
 		}
 		return -1;
 	}
