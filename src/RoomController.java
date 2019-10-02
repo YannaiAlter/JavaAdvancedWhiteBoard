@@ -307,10 +307,10 @@ http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
 			State.mainController = loader.getController();
 
 			Lobby lobby = new Lobby();
-			Timeline roomListTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
-			lobby.setTimerUpdateList(roomListTimer);
-			roomListTimer.setCycleCount(Timeline.INDEFINITE);
-			roomListTimer.play();
+			Timeline lobbyRoomListTimer = new Timeline(new KeyFrame(Duration.millis(DBFinals.ROOMLIST_UPDATES_INTERVAL_TIME), event -> Platform.runLater(lobby)));
+			lobby.setTimerUpdateList(lobbyRoomListTimer);
+			lobbyRoomListTimer.setCycleCount(Timeline.INDEFINITE);
+			lobbyRoomListTimer.play();
 
 		}
 		catch (Exception e){e.printStackTrace();}
