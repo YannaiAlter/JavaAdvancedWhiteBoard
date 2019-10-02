@@ -17,7 +17,7 @@ public class State {
 	static Date lastTimeUpdatedChat;
 	static Date lastTimeUpdatedRoomList;
 
-	static Shape.Type drawState = Shape.Type.LINE;
+		static Shape.Type drawState = Shape.Type.LINE;
 	static Label currentToolBoxItemClicked;
 	static String username;
 	static String roomName;

@@ -1,1 +1,0 @@
-CREATE TABLE mysql.accounts(username VARCHAR(100) NOT NULL,password VARCHAR(12) NOT NULL,PRIMARY KEY ( username ));  

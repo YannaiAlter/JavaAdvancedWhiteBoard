@@ -231,7 +231,7 @@ public class RoomController {
 	/*Credit:
 http://java-buddy.blogspot.com/2013/04/free-draw-on-javafx-canvas.html
 	 */
-	public synchronized void initDraw(){
+		public synchronized void initDraw(){
 		double canvasWidth = graphicsContext.getCanvas().getWidth();
 		double canvasHeight = graphicsContext.getCanvas().getHeight();
 
